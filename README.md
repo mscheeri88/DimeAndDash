@@ -1,2 +1,2 @@
 Dime and Dash
-### Here is out amazing app!
+### Here is our amazing app!
