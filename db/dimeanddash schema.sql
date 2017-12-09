@@ -8,6 +8,12 @@ create table customer (
     primary key (id)
 );
 
+create table customer (
+	customer_id integer auto_increment not null,
+    venmo_handle varchar(100) not null,
+    primary key (customer_id)
+);
+
 create table bill_item (
 	id integer auto_increment not null,
     description varchar(100) not null,
