@@ -1,4 +1,4 @@
--- drop database if exists dimeanddash_db;
+drop database if exists dimeanddash_db;
 
 create database dimeanddash_db;
 
@@ -36,4 +36,16 @@ create table bill_item (
 		foreign key (customer_id)
 		references customer(customer_id),
     primary key (bill_item_id)
+);
+
+create table customer_bill (
+	customer_bill_id integer auto_increment not null,
+	bill_id integer,
+		foreign key (bill_id)
+		references bill(bill_id),
+	customer_id integer,
+		foreign key (customer_id)
+		references customer(customer_id),
+	tip_amount decimal(7,2),
+    primary key (customer_bill_id)
 );
