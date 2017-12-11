@@ -1,5 +1,5 @@
 /*TYPOGRAPHY*/
-li, a, button, h1, h2, h3 {
+li, a, button, h1, h2, h3, input {
   color: #525358;
   font-family: 'Montserrat', sans-serif;
 }
@@ -46,6 +46,19 @@ h3 {
 
 .button:focus {
   outline: 0;
+}
+
+/*INPUT STYLES*/
+input {
+  border: none !important;
+  box-shadow: none !important;
+  border-bottom: 3px solid #E0E0E0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+}
+
+input:focus {
+  border-bottom: 3px solid #5965E5 !important;
 }
 
 /*NAVIGATION*/
@@ -118,3 +131,37 @@ nav li {
   background-color: rgba(89, 101, 229, 0.05) !important;
   color: #5965E5;
 }
+
+.user-content {
+  width: 80%;
+  margin-bottom: 60px;
+}
+
+.user-items {
+  padding: 30px;
+  background-color: #F9F9F9;
+  margin-top: 20px;
+}
+
+.select-tip {
+  margin: 20px 0 10px;
+  font-weight: 700;
+}
+
+.tip-amount .button {
+  width: 60px;
+}
+
+.tip-amount li {
+  display: inline-block;
+}
+
+.selected {
+  background-color: #5965E5;
+  color: #FFFFFF;
+}
+
+.submit {
+  width: 100%;
+}
+
