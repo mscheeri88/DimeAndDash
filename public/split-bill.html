@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dime &amp; Dash</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <nav>
+      <div class="nav-content">
+        <a href="#"><img class="logo" src="assets/images/logo.svg" alt="Dime And Dash"></a>
+        <ul class="desktop-nav-items">
+          <li><a href="select-customers.html">Restart</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="section main-interface">
+        <div class="columns">
+
+          <div class="column">
+
+            <!-- EMPTY STATE -->
+            <div class="user-content">
+              <input class="input" type="text" placeholder="@venmo username">
+              <div class="user-items"><p>Drag and drop check items here</p></div>
+            </div>
+
+            <!-- FILLED STATE -->
+            <div class="user-content">
+              <input class="input" type="text" placeholder="@venmo username">
+              <div class="user-items">
+                <ul class="bill-item">
+                  <li><span><p>Pizza</p><p class="price">$9.00</p></span></li>
+                  <li class="list-style-2"><span><p>Tax</p><p class="price">$.90</p></span></li>
+                  <li class="list-style-2"><span><p>Tip</p><p class="price">$2.00</p></span></li>
+                  <li class="total"><span><p>Total</p><p class="price">$11.90</p></span></li>
+                </ul>
+              </div>
+              <p class="select-tip">Select Tip Amount</p>
+              <ul class="tip-amount">
+                <li><button class="button">15%</button></li>
+                <li><button class="button">18%</button></li>
+                <li><button class="button selected">20%</button></li>
+                <li><button class="button">22%</button></li>
+              </ul>
+              <button class="button submit">Submit Payment</button>
+            </div>
+
+          </div>
+
+          <div class="column bill">
+            <h3>the check</h3>
+            <ul class="bill-item">
+              <li><span><p>Fancy Cheeseburger</p><p class="price">$20.00</p></span></li>
+              <li><span><p>Soda</p><p class="price">$2.00</p></span></li>
+              <li class="list-style-2"><span><p>Tax</p><p class="price">$2.20</p></span></li>
+              <li class="list-style-2"><span><p>Tip</p><p class="price">$4.40</p></span></li>
+              <li class="list-style-2 total"><span><p>Total</p><p class="price">$28.60</p></span></li>
+            </ul>
+          </div>
+
+        </div>
+    </section>
+
+  </body>
+</html>

@@ -1,0 +1,167 @@
+/*TYPOGRAPHY*/
+li, a, button, h1, h2, h3, input {
+  color: #525358;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1, h3 {
+  font-family: 'Lobster', cursive;
+}
+
+h1 {
+  margin-bottom: 50px !important;
+}
+
+h2 {
+  margin-bottom: 25px;
+  font-size: 20px;
+}
+
+h3 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+/*BUTTON STYLES*/
+.button {
+  width: 300px;
+  border: 2px solid #5965E5;
+  height: 60px;
+  margin-bottom: 20px;
+  background-color: rgba(89, 101, 229, 0.05);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #5965E5;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #5965E5;
+  color: #FFFFFF;
+  border: 2px solid #5965E5;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+/*INPUT STYLES*/
+input {
+  border: none !important;
+  box-shadow: none !important;
+  border-bottom: 3px solid #E0E0E0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+}
+
+input:focus {
+  border-bottom: 3px solid #5965E5 !important;
+}
+
+/*NAVIGATION*/
+nav {
+  /*border-bottom: 1px solid #E0E0E0;*/
+  -webkit-box-shadow: 0px 7px 55px -1px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 7px 55px -1px rgba(0,0,0,0.2);
+  box-shadow: 0px 7px 55px -1px rgba(0,0,0,0.2);
+  height: 60px;
+}
+
+.nav-content {
+  max-width: 1470px;
+  margin: 0 auto;
+}
+
+.logo {
+  margin: 17px 0 0 50px;
+}
+
+nav li {
+  float: right;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+  margin: -27px 50px 0 0;
+}
+
+/*SELECT CUSTOMERS*/
+.select-customers {
+  text-align: center;
+}
+
+/*DIVY UP BILL INTERFACE*/
+.main-interface {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bill {
+  padding: 50px;
+  -webkit-box-shadow: 0px 7px 55px -1px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 7px 55px -1px rgba(0,0,0,0.2);
+  box-shadow: 0px 7px 55px -1px rgba(0,0,0,0.2);
+  background-color: #F9F9F9;
+  max-width: 600px;
+}
+
+.bill-item li {
+  background-color: #FFFFFF;
+  margin-bottom: 10px;
+}
+
+.bill-item p {
+  display: inline-block;
+  padding: 10px;
+}
+
+.price {
+  float: right;
+}
+
+.list-style-2 {
+  background-color: transparent !important;
+}
+
+.total {
+  font-weight: 700;
+  font-size: 20px;
+  background-color: rgba(89, 101, 229, 0.05) !important;
+  color: #5965E5;
+}
+
+.user-content {
+  width: 80%;
+  margin-bottom: 60px;
+}
+
+.user-items {
+  padding: 30px;
+  background-color: #F9F9F9;
+  margin-top: 20px;
+}
+
+.select-tip {
+  margin: 20px 0 10px;
+  font-weight: 700;
+}
+
+.tip-amount .button {
+  width: 60px;
+}
+
+.tip-amount li {
+  display: inline-block;
+}
+
+.selected {
+  background-color: #5965E5;
+  color: #FFFFFF;
+}
+
+.submit {
+  width: 100%;
+}
+
