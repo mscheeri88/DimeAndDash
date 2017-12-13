@@ -11,4 +11,10 @@ router.get("/", function(req, res) {
 	//res.render("index", hbsObject);
 });
 
+router.get("/split-bill", function(req, res) {
+	res.render("split-bill");
+	//res.render("index", hbsObject);
+});
+
+
 module.exports = router;
