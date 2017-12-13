@@ -21,4 +21,8 @@ var routes = require("./controllers/routes.js");
 
 app.use("/", routes);
 
-app.listen(port);
+// Starts the server to begin listening
+// =============================================================
+app.listen(port, function() {
+  console.log("App listening on PORT " + port);
+});

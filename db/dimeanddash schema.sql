@@ -12,6 +12,7 @@ create table customer (
 
 create table bill (
 	bill_id integer auto_increment not null,
+    server_name varchar(100),
     primary key (bill_id)
 );
 
