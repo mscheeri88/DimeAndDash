@@ -3,7 +3,7 @@
 -- a new customer record is created for each customer, for each bill
 -- to see all transactions for a particular customer, use the venmo handle
 INSERT INTO customer (venmo_handle, tip_amount)
-VALUES ('@Alice',3),('@Bob',6),('@Alice',4),('@David',3),('@Emily',4),('@Fred',4),('@Alice',3),('@Cathy',5);
+VALUES ('@Alice',3),('@Bob',6),('@Alice',4),('@David',3),('@Emily',4),('@Fred',4),('@Alice',3),('@Cathy',5),('@Fred',3);
 
 
 -- the bill item table associates a customer with an item on the bill
@@ -41,9 +41,9 @@ VALUES	('Coors Light','Alcoholic Beverages',3,12,1001,1),
         ('Tennessee WhiskeyCake','Dessert',5,10,1004,7),
         ('Turkey Burger','Food',7.5,10,1004,8),
         ('Really Good Cheeseburger','Food',7,10,1004,7),
-        ('Bud Light','Alcoholic Beverages',2,12,1005,8),
-        ('Bud Light','Alcoholic Beverages',2,12,1005,8),
-        ('Jack Daniel Chicken','Food',6.5,10,1005,8);
+        ('Bud Light','Alcoholic Beverages',2,12,1005,9),
+        ('Bud Light','Alcoholic Beverages',2,12,1005,9),
+        ('Jack Daniel Chicken','Food',6.5,10,1005,9);
 
 -- use the select statements below (one at a time) to see what the data looks like.
 -- select * from customer;

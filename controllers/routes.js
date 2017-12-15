@@ -18,38 +18,15 @@ router.get("/", function(req, res) {
 router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
 	console.log(req.params);
 
-	var currentCustomers = [];
-
-	// create new customer record
-	var newCustomer = {
-		customerID: 0,
-		venmoHandle: "@testVenmoHandle",
-		tipAmount: 0
-	};
-
-	customer.create({venmo_handle: newCustomer.venmoHandle}, function(result) {
-
-		console.log(result);
-
-		// set the newCustomerID to the ID returned from the database
-		// add the new customer to the customer array
-		newCustomer.customerID = result.insertId;
-		currentCustomers.push(newCustomer);
-	});
-
 	// retrieve the bill items
 	billItem.readOne("bill_id", req.params.billID, function(data) {
-		var billItems = data;
-
-		// render the split-bill page using handlebars
 		var hbsObject = {
-			billItems: billItems,
-			customers: currentCustomers
+			customers: req.params.customers,
+			billItems: data
 		};
 	    console.log(hbsObject);
 		res.render("split-bill", hbsObject);
 	});
-
 });
 
 module.exports = router;

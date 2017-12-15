@@ -1,11 +1,14 @@
 <section class="section main-interface">
     <div class="columns">
 
-      <div class="column">
+      <div class="column customers" data-customers={{customers}}>
 
         <!-- EMPTY STATE -->
         <div class="user-content">
-          <input class="input" type="text" placeholder="@venmo username">
+          <form>
+            <input class="input" type="text" placeholder="@venmo username">
+            <button type="submit" id="submitVenmo">Submit</button>
+          </form>
           <div class="user-items">
             <ol id=test></ol>
           </div>
@@ -36,7 +39,7 @@
 
       <div class="column bill">
         <h3>the check</h3>
-        <ul class="main-item">
+        <ul class="main-item" data-customer-id="0">
           {{#each billItems}}
               <li data-bill-item-id="{{bill_item_id}}" data-price="{{price}}" data-tax-percent="{{tax_percent}}" data-customer-id={{customer_id}}>
                 <span>
@@ -54,3 +57,5 @@
 
     </div>
 </section>
+
+<script src="../assets/js/split-bill.js"></script>
