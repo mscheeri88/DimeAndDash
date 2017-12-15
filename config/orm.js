@@ -12,6 +12,15 @@ var orm = {
       cb(result);
     });
   },
+  selectOne: function(tableName, searchCol, searchVal, cb) {
+    var queryString = "SELECT * FROM ?? WHERE ?? = ?";
+    connection.query(queryString, [tableName, searchCol, searchVal], function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
   insertOne: function(tableName, valuesObject, cb) {
     var queryString = "INSERT INTO ?? SET ?";
     connection.query(queryString, [tableName, valuesObject], function(err, result) {

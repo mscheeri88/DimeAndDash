@@ -12,9 +12,9 @@ router.get("/", function(req, res) {
 });
 
 router.get("/split-bill", function(req, res) {
-	billItem.all(function(data) {
+	billItem.readOne("bill_id", 1005, function(data) {
 		var hbsObject = {
-			billItem: data
+			billItems: data
 		};
 	    console.log(hbsObject);
 		res.render("split-bill", hbsObject);

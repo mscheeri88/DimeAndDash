@@ -35,11 +35,14 @@
       <div class="column bill">
         <h3>the check</h3>
         <ul class="bill-item">
-          <li><span><p>Fancy Cheeseburger</p><p class="price">$20.00</p></span></li>
+          {{#each billItems}}
+              <li><span><p>{{bill_item_id}} {{description}} {{category}}  <p class="price">${{price}}</p>  {{tax_percent}} {{bill_id}} {{customer_id}}</p><button class="move-button">move it!</button></span></li>
+          {{/each}}
+          {{!-- <li><span><p>Fancy Cheeseburger</p><p class="price">$20.00</p></span></li>
           <li><span><p>Soda</p><p class="price">$2.00</p></span></li>
           <li class="list-style-2"><span><p>Tax</p><p class="price">$2.20</p></span></li>
           <li class="list-style-2"><span><p>Tip</p><p class="price">$4.40</p></span></li>
-          <li class="list-style-2 total"><span><p>Total</p><p class="price">$28.60</p></span></li>
+          <li class="list-style-2 total"><span><p>Total</p><p class="price">$28.60</p></span></li> --}}
         </ul>
       </div>
 

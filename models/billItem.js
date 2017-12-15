@@ -2,8 +2,13 @@
 var orm = require("../config/orm.js");
 
 var billItem = {
-	all: function(cb) {
+	readAll: function(cb) {
 		orm.selectAll("bill_item", function(res) {
+		  cb(res);
+		});
+	},
+	readOne: function(searchCol, searchVal, cb) {
+		orm.selectOne("bill_item", searchCol, searchVal, function(res) {
 		  cb(res);
 		});
 	},
