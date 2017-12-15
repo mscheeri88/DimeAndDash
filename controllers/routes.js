@@ -21,5 +21,6 @@ router.get("/split-bill", function(req, res) {
 	});
 });
 
+// use parameters to render split-bill page
 
 module.exports = router;
