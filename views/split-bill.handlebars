@@ -6,7 +6,9 @@
         <!-- EMPTY STATE -->
         <div class="user-content">
           <input class="input" type="text" placeholder="@venmo username">
-          <div class="user-items"><p>Drag and drop check items here</p></div>
+          <div class="user-items">
+            <ol id=test></ol>
+          </div>
         </div>
 
         <!-- FILLED STATE -->
@@ -34,7 +36,7 @@
 
       <div class="column bill">
         <h3>the check</h3>
-        <ul class="bill-item">
+        <ul class="main-item">
           {{#each billItems}}
               <li><span><p>{{bill_item_id}} {{description}} {{category}}  <p class="price">${{price}}</p>  {{tax_percent}} {{bill_id}} {{customer_id}}</p><button class="move-button">move it!</button></span></li>
           {{/each}}
@@ -47,4 +49,4 @@
       </div>
 
     </div>
-</section>}}
+</section>
