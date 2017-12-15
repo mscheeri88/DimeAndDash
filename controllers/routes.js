@@ -21,5 +21,16 @@ router.get("/split-bill", function(req, res) {
 	});
 });
 
+// use parameters to render split-bill page
+router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
+	console.log(req.params);
+	billItem.readOne("bill_id", req.params.billID, function(data) {
+		var hbsObject = {
+			billItems: data
+		};
+	    console.log(hbsObject);
+		res.render("split-bill", hbsObject);
+	});
+});
 
 module.exports = router;
