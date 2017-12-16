@@ -28,7 +28,7 @@ $(document).ready(function(){
 			var containerCode =	
 				'<form><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
 				'<button type="submit" class="submitVenmo" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
-				'<div class="user-items"><ol id=test></ol></div>';
+				'<div class="user-items"><form></form></div>';
 
 			customerContainer.html(containerCode);
 
@@ -57,12 +57,29 @@ $(document).ready(function(){
 			newCustomer.customerID = data.insertId;
 			newCustomer.customerNumber = currentCustomer;
 			customers.push(newCustomer);
-			console.log(customers);
+			console.log(customers);			
 		});
 	});
 
 	$(".move-button").click (function(){
 	    console.log("Move button was clicked.");
+
+	    // get billItemID from submit button
+		var currentBillItemID = $(this).attr("data-bill-item-id");
+
+		// get customerID from dropdown
+		var dropDownID = "#" + currentBillItemID;
+		var currentCustomerID = $(dropDownID).val();
+
+		console.log("currentBillItemID: " + currentBillItemID);
+		console.log("currentCustomerID: " + currentCustomerID);
+
+	// update bill item object with new customerID
+	// for loop i {
+	// 	if (bill_items[i].bill_item_id === currentBillItemID) {
+	// 		bill_items[i].customer_id = currentCustomerID
+	// 	}
+	// };
 	});
 
 }); // end of document.ready function

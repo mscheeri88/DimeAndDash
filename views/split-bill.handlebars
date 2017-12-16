@@ -34,7 +34,12 @@
           {{#each billItems}}
               <li data-bill-item-id="{{bill_item_id}}" data-price="{{price}}" data-tax-percent="{{tax_percent}}" data-customer-id={{customer_id}}>
                 <span>
-                  <p>{{description}}</p><p class="price">${{price}}</p><button class="move-button">move it!</button>
+                  <p>{{description}}</p><p class="price">${{price}}</p>
+                    <select name="customers" id="{{bill_item_id}}">
+                      <option value="1">Customer 1</option>
+                      <option value="2">Customer 2</option>
+                    </select>
+                    <button class="move-button" data-bill-item-id="{{bill_item_id}}">move it!</button>
                 </span>
               </li>
           {{/each}}
