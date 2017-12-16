@@ -32,7 +32,7 @@ $(document).ready(function(){
 
 			customerContainer.html(containerCode);
 
-		$ (".customers").append(customerContainer);
+		$ (".customers").prepend(customerContainer);
 	};
 
 	// click on submitVenmo button to capture venmo handle and create a customer database record
