@@ -29,6 +29,15 @@ router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
 	});
 });
 
+router.get("/api/billItems/:billID", function(req,res) {
+	console.log(req.params);
+
+	// retrieve the bill items
+	billItem.readOne("bill_id", req.params.billID, function(data) {
+		res.json(data);
+	});
+});
+
 // receive new customer info and log to database
 router.post("/api/newCustomer", function(req,res) {
 	console.log("New Customer:");

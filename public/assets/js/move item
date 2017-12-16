@@ -47,7 +47,65 @@
 		if (bill_items[i].bill_item_id === currentBillItemID) {
 			bill_items[i].customer_id = currentCustomerID
 		}
+
+
+	// add bill item to customer list
+
+	function moveBillItem(billItemID, customerNumber) {
+	
+	for loop {
+		if (billItems[i].bill_item_id == billItemID) {
+			billItemIndex = i;
+		};
 	};
 
-	
+	var newListItem = $("<li>");
+
+		newListItem.attr("data-bill-item-id",billItemID);
+
+	var listItemCode = '<span>
+      <p>' + billItems[billItemIndex].description + '</p><p class="price">$' + billItems[billItemIndex].description + '</p>
+        <select name="customers" id="' + billItemID + '">
+          <option value="0">Return to Check</option>
+          <option value="1">Customer 1</option>
+          <option value="2">Customer 2</option>
+        </select>
+        <button class="move-button" data-bill-item-id="' + billItemID + '">move it!</button>
+    </span>'
+
+		newListItem.html(listItemCode);
+
+		var listSelector = "#list" + customerNumber;
+
+		$ (listSelector).append(newListItem);	
+	}
+
+<li data-bill-item-id="{{bill_item_id}}">
+    <span>
+      <p>{{description}}</p><p class="price">${{price}}</p>
+        <select name="customers" id="{{bill_item_id}}">
+          <option value="0">Return to Check</option>
+          <option value="1">Customer 1</option>
+          <option value="2">Customer 2</option>
+        </select>
+        <button class="move-button" data-bill-item-id="{{bill_item_id}}">move it!</button>
+    </span>
+  </li>
+
+
+
+
+
+
+	// delete bill item from check
+
+
+
+	};
+
+
+
+
+
+
 
