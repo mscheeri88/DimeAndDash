@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 			var containerCode =	
 				'<form><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
-				'<button type="submit" class="submitVenmo" data-submitID=' + customerNumber +'>Submit</button></form>' +
+				'<button type="submit" class="submitVenmo" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
 				'<div class="user-items"><ol id=test></ol></div>';
 
 			customerContainer.html(containerCode);
@@ -38,9 +38,10 @@ $(document).ready(function(){
 	// click on submitVenmo button to capture venmo handle and create a customer database record
 	$(".submitVenmo").click (function(){
 		event.preventDefault();
-		var currentCustomer = $(this).attr("data-submitID");
+		var currentCustomer = $(this).attr("data-customerNumber");
 		var inputSelector = "#input" + currentCustomer;
 		console.log(currentCustomer + " submit button clicked");
+
 		var newCustomer = {
 			venmo_handle: $(inputSelector).val().trim(),
 			tip_amount: 0
@@ -51,6 +52,7 @@ $(document).ready(function(){
 		// On success, run the following code
 		.done(function(data) {
 			// Log the data we found
+			console.log(data);
 			console.log("new customerID:" + data.insertId);
 			newCustomer.customerID = data.insertId;
 			newCustomer.customerNumber = currentCustomer;
