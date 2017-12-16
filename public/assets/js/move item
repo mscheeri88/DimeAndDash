@@ -1,0 +1,53 @@
+// var bill_items = [{
+	bill_item_id: 1,
+	description: 'beer',
+	price: 5,
+	customer_id: 9999	
+},
+{
+	bill_item_id: 2,
+	description: 'hamburger',
+	price: 6,
+	customer_id: 9999
+},
+{
+	bill_item_id: 3,
+	description: 'turkey sandwich',
+	price: 7,
+	customer_id: 9999
+}
+]
+
+
+// var customers = [{
+	venmo_handle: '@testcustomer22',
+	tip_amount: 0,
+	customer_id: 10012,
+	customerNumber: 2
+},
+{
+	venmo_handle: '@testcustomer1',
+	tip_amount: 0,
+	customer_id: 10013,
+	customerNumber: 1
+}
+]
+
+
+// function onclick move button
+
+	// get billItemID from submit button
+	//var currentBillItemID = $(SUBMITBUTTON).attr("data-bill-item-id")
+
+	// get customerID from dropdown
+	// var currentCustomerID = $(DROPDOWNID).VAL()
+
+	// update bill item object with new customerID
+	for loop i {
+		if (bill_items[i].bill_item_id === currentBillItemID) {
+			bill_items[i].customer_id = currentCustomerID
+		}
+	};
+
+	
+
