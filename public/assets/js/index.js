@@ -1,5 +1,6 @@
 
 $(document).ready(function(){
+
   $(".main-item li").draggable({helper:"clone"});
 
   $(".user-items").droppable({drop:function(event,ui){
@@ -8,8 +9,6 @@ $(document).ready(function(){
 
 
 	console.log("index.js found");
-
-	// Index Page ==================================================================
 
 	// click on customer button on index page
 	$(".customer-button").click (function(){
@@ -22,25 +21,6 @@ $(document).ready(function(){
 	    // go to the split-bill page, including parameters
 	    var parameters = "cust=" + numCustomers + "&billID=" + billID;
 	    location.href = "/split-bill/" + parameters;
-	});
-
-
-	// Split-Bill Page ==============================================================
-
-	$("#submitVenmo").click (function(){
-		event.preventDefault();
-
-		var numCustomers = $(".customers").attr("data-customers");
-
-		
-
-		console.log("numCustomers: " + numCustomers);
-
-	});
-
-
-	$(".move-button").click (function(){
-	    console.log("Move button was clicked.");
 	});
 
 }); // end of document.ready function

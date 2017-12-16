@@ -29,4 +29,18 @@ router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
 	});
 });
 
+// receive new customer info and log to database
+router.post("/api/newCustomer", function(req,res) {
+	console.log("New Customer:");
+	console.log(req.body);
+	customer.create({
+		venmo_handle: req.body.venmo_handle,
+		tip_amount: req.body.tip_amount
+		},
+		function(results){
+			res.json(results);
+		}
+	);
+});
+
 module.exports = router;

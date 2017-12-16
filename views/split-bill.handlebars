@@ -6,7 +6,7 @@
         <!-- EMPTY STATE -->
         <div class="user-content">
           <form>
-            <input class="input" type="text" placeholder="@venmo username">
+            <input class="input" type="text" placeholder="@venmo username" id="venmo-handle">
             <button type="submit" id="submitVenmo">Submit</button>
           </form>
           <div class="user-items">
@@ -39,7 +39,7 @@
 
       <div class="column bill">
         <h3>the check</h3>
-        <ul class="main-item" data-customer-id="0">
+        <ul class="main-item" data-containerID="0">
           {{#each billItems}}
               <li data-bill-item-id="{{bill_item_id}}" data-price="{{price}}" data-tax-percent="{{tax_percent}}" data-customer-id={{customer_id}}>
                 <span>
