@@ -14,6 +14,7 @@ create table customer (
     primary key (customer_id)
 );
 
+alter table customer auto_increment=10001;
 
 -- the bill item table associates a customer with an item on the bill
 -- items on the same bill will have the same bill id
