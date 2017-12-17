@@ -22,6 +22,7 @@ router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
 	billItem.readOne("bill_id", req.params.billID, function(data) {
 		var hbsObject = {
 			customers: req.params.customers,
+			billID: req.params.billID,
 			billItems: data
 		};
 	    console.log(hbsObject);
