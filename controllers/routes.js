@@ -53,4 +53,21 @@ router.post("/api/newCustomer", function(req,res) {
 	);
 });
 
+// to view table - view all sales of a specific item
+router.get("/item-sales", function(req, res) {
+	console.log(req.params);
+
+	// retrieve the bill items
+	billItem.readOne("bill_id", req.params.billItem, function(data) {
+		var itemSaleObject = {
+			billItems: data,
+			description: req.params.description,
+			price: req.params.price
+		};
+	    console.log(itemSaleObject);
+		res.render("item-sale-table", itemSaleObject);
+	});
+});
+
+
 module.exports = router;

@@ -1,0 +1,22 @@
+<div class="container table-container">
+  <table class="table is-striped">
+    <tbody>
+      <tr>
+        <th>Item Description</th>
+        <th>Price Per Item</th>
+        <th>Total Sales</th>
+      </tr>
+      <tr>
+      {{#each billItems}}
+        <td>{{description}}</td>
+        <td>${{price}}</td>
+        <td>Total Sales</td>
+      {{/each}}
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+<script src="../assets/js/split-bill.js"></script>
