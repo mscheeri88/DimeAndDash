@@ -24,13 +24,13 @@ $(document).ready(function(){
 	var customers = [];
 
 	//calculate the tax and total for the check
-	function calcCheckTotals() {
+	function calcCheckTotals(customerNumber, customerID) {
 
 		var subTotal = 0;
 		var taxTotal = 0;
 
 		for (var i = 0; i < billItems.length; i++) {
-			if (billItems[i].customer_id == 9999) {
+			if (billItems[i].customer_id == customerID) {
 				subTotal = subTotal + billItems[i].price;
 				taxTotal = taxTotal + (billItems[i].price * billItems[i].tax_percent / 100);
 			}
@@ -39,9 +39,12 @@ $(document).ready(function(){
 		var total = subTotal + taxTotal;
 
 		// display totals on the check
-		$("#subTotalCheck").html("$" + subTotal.toFixed(2));
-		$("#taxCheck").html("$" + taxTotal.toFixed(2));
-		$("#totalCheck").html("$" + total.toFixed(2));
+		var subTotalSelector = "#subTotal" + customerNumber;
+		var taxSelector = "#tax" + customerNumber;
+		var totalSelector = "#total" + customerNumber;
+		$(subTotalSelector).html("$" + subTotal.toFixed(2));
+		$(taxSelector).html("$" + taxTotal.toFixed(2));
+		$(totalSelector).html("$" + total.toFixed(2));
 
 	}; // end of calcCheckTotals function
 
@@ -61,7 +64,7 @@ $(document).ready(function(){
 		newListItem.attr("id","li" + billItemID);
 
 		var listItemCode =	'<span><p class="check-item">' + billItems[billItemIndex].description +
-							'</p><p class="price">$' + billItems[billItemIndex].price +
+							'</p><p class="price">$' + billItems[billItemIndex].price.toFixed(2) +
 							'</p><select class="select select-customer" name="customers" id="' + billItemID + '">' +
 							'<option value="0">Return to Check</option>' +
 							'<option value="1">Customer 1</option>' +
@@ -110,8 +113,8 @@ $(document).ready(function(){
 
 		console.log(billItems);
 
-		// TODO remove the bill item from the current customer list
-		// this function does not delete the billItem object, just removes it from the display
+		// remove the bill item from the current customer list
+		// this does not delete the billItem object, just removes it from the display
 		var removeSelector = "#li" + currentBillItemID;
 		$(removeSelector).remove();
 
@@ -119,7 +122,8 @@ $(document).ready(function(){
 		displayBillItem(currentBillItemID, currentCustomerNumber);
 
 		//recalculate check totals
-		calcCheckTotals();
+		// for the check, customerNumber = 0 and customerID = 9999
+		calcCheckTotals(0, 9999);
 
 	}); // end of function move button click
 
@@ -154,7 +158,8 @@ $(document).ready(function(){
 		console.log(billItems);
 
 		//calculate check totals for the initial page load
-		calcCheckTotals();
+		// for the check, customerNumber = 0 and customerID = 9999
+		calcCheckTotals(0, 9999);
 
 		// TODO add the bill items to the check dynamically
 		// not working at the moment, to do with binding move button function
@@ -187,24 +192,22 @@ $(document).ready(function(){
               	'">$0.00</p></span></li>' +
               	'<li class="total"><span>Total<p class="price" id="total' + customerNumber +
               	'">$0.00</p></span></li>' +
-            	'</ul>' +
-            	'</div>'+
-
-                      '<div><p class="select-tip">Select Tip Amount</p>' +
-        '<ul class="tip-amount">' +
-        '<li><button class="button" id="15-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
-        '" value="15">15%</button></li>' +
-          '<li><button class="button" id="18-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
-          '" value="18">18%</button></li>' +
-          '<li><button class="button" id="20-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
-          '" value="20">20%</button></li>' +
-          '<li><button class="button" id="22-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
-          '" value="22">22%</button></li>' +
-        '</ul></div>' ;
+            	'</ul></div>'+
+                '<div><p class="select-tip">Select Tip Amount</p>' +
+        		'<ul class="tip-amount">' +
+		        '<li><button class="button" id="15-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+		        '" value="15">15%</button></li>' +
+				'<li><button class="button" id="18-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+				'" value="18">18%</button></li>' +
+				'<li><button class="button" id="20-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+				'" value="20">20%</button></li>' +
+				'<li><button class="button" id="22-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+				'" value="22">22%</button></li>' +
+				'</ul></div>';
 
 			customerContainer.html(containerCode);
 
-		$ (".customers").prepend(customerContainer);
+		$ (".customers").append(customerContainer);
 	};
 
 	// update the dropdowns on the bill items to have an option for each customer
