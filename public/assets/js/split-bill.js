@@ -47,7 +47,7 @@ $(document).ready(function(){
 
 	// display a bill item in a customer list
 	function displayBillItem(billItemID, customerNumber) {
-	
+
 		// get array position of bill item
 		for (var i = 0; i < billItems.length; i++) {
 			if (billItems[i].bill_item_id == billItemID) {
@@ -60,21 +60,21 @@ $(document).ready(function(){
 
 		newListItem.attr("id","li" + billItemID);
 
-		var listItemCode =	'<span><p>' + billItems[billItemIndex].description +
+		var listItemCode =	'<span><p class="check-item">' + billItems[billItemIndex].description +
 							'</p><p class="price">$' + billItems[billItemIndex].price +
-							'</p><select name="customers" id="' + billItemID + '">' +
+							'</p><select class="select select-customer" name="customers" id="' + billItemID + '">' +
 							'<option value="0">Return to Check</option>' +
 							'<option value="1">Customer 1</option>' +
 							'<option value="2">Customer 2</option>' +
 							'</select>' +
-							'<button class="move-button" data-bill-item-id="' + billItemID +
-							'">move it!</button></span>';
+							'<button class="move-button button" data-bill-item-id="' + billItemID +
+							'">assign</button></span>';
 
 		newListItem.html(listItemCode);
 
 		// append the new list item to the list for the correct customer
 		var listSelector = "#list" + customerNumber;
-		$(listSelector).append(newListItem);	
+		$(listSelector).append(newListItem);
 
 	}; // end of displayBillItem function
 
@@ -143,8 +143,8 @@ function addTip() {
 
 
 };
-  
-  
+
+
 	// Send an AJAX GET-request for bill items
 	$.get("/api/billItems/" + billID)
 	// On success, run the following code
@@ -174,10 +174,10 @@ function addTip() {
 			var customerNumber = (i+1);
 			customerContainer.attr("data-containerID", customerNumber);
 
-			var containerCode =	
-				'<h3>Customer ' + customerNumber + '</h3>' +
-				'<form><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
-				'<button type="submit" class="submitVenmo" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
+			var containerCode =
+				'<h3>customer ' + customerNumber + '</h3>' +
+				'<form class="venmo-form"><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
+				'<button type="submit" class="submitVenmo button" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
 				'<div class="user-items"><ul class="bill-item" id="list' + customerNumber +'"></ul>' +
 				'<ul>' +
 				'<li class="list-style-2"><span>Subtotal<p class="price" id="subTotal' + customerNumber +
@@ -190,7 +190,7 @@ function addTip() {
               	'">$0.00</p></span></li>' +
             	'</ul>' +
             	'</div>'+
-          
+
                       '<div><p class="select-tip">Select Tip Amount</p>' +
         '<ul class="tip-amount">' +
         '<li><button class="button" id="15-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
@@ -232,7 +232,7 @@ function addTip() {
 			customers.push(newCustomer);
 
 			console.log("customers:");
-			console.log(customers);			
+			console.log(customers);
 		});
 	});
 
