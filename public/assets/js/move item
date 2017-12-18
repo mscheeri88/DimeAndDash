@@ -49,7 +49,7 @@
 		}
 
 
-	// add bill item to customer list
+	// move bill item to customer list
 
 	function moveBillItem(billItemID, customerNumber) {
 	
