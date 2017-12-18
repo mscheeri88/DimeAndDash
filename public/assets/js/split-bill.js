@@ -63,15 +63,16 @@ $(document).ready(function(){
 
 		newListItem.attr("id","li" + billItemID);
 
-		var listItemCode =	'<span><p class="check-item">' + billItems[billItemIndex].description +
-							'</p><p class="price">$' + billItems[billItemIndex].price.toFixed(2) +
-							'</p><select class="select select-customer" name="customers" id="' + billItemID + '">' +
-							'<option value="0">Return to Check</option>' +
-							'<option value="1">Customer 1</option>' +
-							'<option value="2">Customer 2</option>' +
-							'</select>' +
-							'<button class="move-button button" data-bill-item-id="' + billItemID +
-							'">assign</button></span>';
+		var listItemCode =	'<span><p class="check-item">' + billItems[billItemIndex].description + '</p>' +
+							'<p class="price">$' + billItems[billItemIndex].price.toFixed(2) + '</p>' +
+							//'<select class="select select-customer customer-dropdown" name="customers" id="' + billItemID + '">' +
+							//'<option value="0">Return to Check</option>' +
+							//'<option value="1">Customer 1</option>' +
+							//'<option value="2">Customer 2</option>' +
+							//'</select>' +
+							//'<button class="move-button button" data-bill-item-id="' + billItemID +
+							//'">assign</button>' +
+							'</span>';
 
 		newListItem.html(listItemCode);
 
@@ -86,7 +87,7 @@ $(document).ready(function(){
 	    console.log("Move button was clicked.");
 
 	    // get billItemID from move button
-		var currentBillItemID = $(this).attr("id");
+		var currentBillItemID = $(this).attr("data-bill-item-id");
 
 		// get customerID from dropdown
 		var dropDownID = "#dd" + currentBillItemID;
@@ -124,6 +125,8 @@ $(document).ready(function(){
 		//recalculate check totals
 		// for the check, customerNumber = 0 and customerID = 9999
 		calcCheckTotals(0, 9999);
+
+		calcCheckTotals(currentCustomerNumber, currentCustomerID);
 
 	}); // end of function move button click
 
@@ -176,7 +179,7 @@ $(document).ready(function(){
 			customerContainer.attr("class", "user-content");
 
 			var customerNumber = (i+1);
-			customerContainer.attr("data-containerID", customerNumber);
+			// customerContainer.attr("data-containerID", customerNumber);
 
 			var containerCode =
 				'<h3>customer ' + customerNumber + '</h3>' +
@@ -207,7 +210,7 @@ $(document).ready(function(){
 
 			customerContainer.html(containerCode);
 
-		$ (".customers").append(customerContainer);
+		$ ("#payment-container").before(customerContainer);
 	};
 
 	// update the dropdowns on the bill items to have an option for each customer
