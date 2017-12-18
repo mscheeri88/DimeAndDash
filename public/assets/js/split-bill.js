@@ -38,12 +38,10 @@ $(document).ready(function(){
 
 		var total = subTotal + taxTotal;
 
-		console.log("subTotal: " + subTotal.toFixed(2));
-		console.log("taxTotal: " + taxTotal.toFixed(2));
-		console.log("total: " + total.toFixed(2));
-		$("#checkSubTotal").html("$" + subTotal.toFixed(2));
-		$("#checkTax").html("$" + taxTotal.toFixed(2));
-		$("#checkTotal").html("$" + total.toFixed(2));
+		// display totals on the check
+		$("#subTotalCheck").html("$" + subTotal.toFixed(2));
+		$("#taxCheck").html("$" + taxTotal.toFixed(2));
+		$("#totalCheck").html("$" + total.toFixed(2));
 
 	}; // end of checkTotals function
 
