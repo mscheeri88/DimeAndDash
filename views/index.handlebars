@@ -6,7 +6,11 @@
     <h2>
       Enter the Bill ID
     </h2>
-    <input type="text" name="billID" id="billID"></input>
+    <select name="billID" id="billID">
+    {{#each billIDs}}
+      <option value="{{this}}">{{this}}</option>
+    {{/each}}
+    </select>
     <h2>
       Select the number of customers that will split the bill.
     </h2>

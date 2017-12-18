@@ -1,0 +1,52 @@
+'hello' + 'world'
+helloworld
+
+'hello' + ' world'
+hello world
+
+'"hello' + ' world"'
+"hello world"
+
+
+<div class="bold">
+
+'<div class="' + customerNumber + 'bold"'
+
+id="15-btn-tip-2"
+
+
+customers = [{
+	customerID: 34,
+	venmo_handle: '@fhdafhlda'
+	customerNumber: '2'
+},
+{
+	customerID: 33,
+	venmo_handle: '@rersfafhlda'
+	customerNumber: '1'
+}]
+
+
+billItems = [{
+	billItemId: 23,
+	description: 'coors light',
+	price: 5,
+	customer_id: 39
+},
+{
+	billItemId: 24,
+	description: 'wings',
+	price: 10,
+	customer_id: 39
+},
+	billItemId: 25,
+	description: 'green bean fries',
+	price: 5,
+	customer_id: 38
+},
+{
+	billItemId: 26,
+	description: 'steak',
+	price: 10,
+	customer_id: 38
+}]
