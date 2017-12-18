@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 
   $(".main-item li").draggable({helper:"clone"});
@@ -35,10 +34,25 @@ $(document).ready(function(){
 			var customerNumber = (i+1);
 			customerContainer.attr("data-containerID", customerNumber);
 
-			var containerCode =	
+			var containerCode =
 				'<form><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
-				'<button type="submit" class="submitVenmo" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
-				'<div class="user-items"><ul id="list' + customerNumber +'"></ul></div>';
+				'<button type="submit" class="submitVenmo" data-customerNumber='
+         + customerNumber +'>Submit</button></form>' +
+				'<div class="user-items"><ul id="list' + customerNumber +'"></ul></div>' +
+
+        '<div><p class="select-tip">Select Tip Amount</p>' +
+        '<ul class="tip-amount">' +
+        '<li><button class="button" id="15-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+        '" value="15">15%</button></li>' +
+          '<li><button class="button" id="18-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="18">18%</button></li>' +
+          '<li><button class="button" id="20-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="20">20%</button></li>' +
+          '<li><button class="button" id="22-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="22">22%</button></li>' +
+        '</ul></div>' ;
+
+
 
 			customerContainer.html(containerCode);
 
@@ -54,8 +68,11 @@ $(document).ready(function(){
 
 		var newCustomer = {
 			venmo_handle: $(inputSelector).val().trim(),
-			tip_amount: 0
+			tip_amount: 0,
 		};
+
+
+
 
 		// Send an AJAX POST-request with jQuery
 		$.post("/api/newCustomer", newCustomer)
@@ -67,13 +84,17 @@ $(document).ready(function(){
 			newCustomer.customerID = data.insertId;
 			newCustomer.customerNumber = currentCustomer;
 			customers.push(newCustomer);
-			console.log(customers);			
+      console.log("Here come out customer data");
+			console.log(customers);
+      console.log('----------------------------------------------');
+
+
 		});
 	});
 
 	// move bill item to customer list
 	function moveBillItem(billItemID, customerNumber) {
-	
+
 		for (var i = 0; i < billItems.length; i++) {
 			if (billItems[i].bill_item_id == billItemID) {
 				var billItemIndex = i;
@@ -98,7 +119,7 @@ $(document).ready(function(){
 
 		var listSelector = "#list" + customerNumber;
 
-		$(listSelector).append(newListItem);	
+		$(listSelector).append(newListItem);
 	};
 
 	$(".move-button").click (function(){
@@ -131,6 +152,33 @@ $(document).ready(function(){
 		};
 
 		moveBillItem(currentBillItemID, currentCustomerNumber);
+    console.log(billItems);
 	});
 
 }); // end of document.ready function
+
+
+
+
+
+//Tip function
+
+function addTip() {
+  var tipPercent = $(this).val();
+  var customerNumber = $(this).attr('data-customernumber');
+  var currentCustomerID;
+
+
+  for (var i = 0; i < customers.length; i++) {
+    if (customers[i].customerNumber == customerNumber) {
+      currentCustomerID = customers[i].customerId;
+
+    }
+  }
+
+//loop through the bill items
+// and sub-total item that = customer id
+// * the sub-total by tip percent
+
+
+}
