@@ -123,6 +123,28 @@ $(document).ready(function(){
 
 	}); // end of function move button click
 
+  //Tip function
+function addTip() {
+  var tipPercent = $(this).val();
+  var customerNumber = $(this).attr('data-customernumber');
+  var currentCustomerID;
+
+
+  for (var i = 0; i < customers.length; i++) {
+    if (customers[i].customerNumber == customerNumber) {
+      currentCustomerID = customers[i].customerId;
+
+    };
+  };
+
+//loop through the bill items
+// and sub-total item that = customer id
+// * the sub-total by tip percent
+
+
+};
+  
+  
 	// Send an AJAX GET-request for bill items
 	$.get("/api/billItems/" + billID)
 	// On success, run the following code
@@ -167,9 +189,19 @@ $(document).ready(function(){
               	'<li class="total"><span>Total<p class="price" id="total' + customerNumber +
               	'">$0.00</p></span></li>' +
             	'</ul>' +
-            	'</div>';
-
-    
+            	'</div>'+
+          
+                      '<div><p class="select-tip">Select Tip Amount</p>' +
+        '<ul class="tip-amount">' +
+        '<li><button class="button" id="15-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+        '" value="15">15%</button></li>' +
+          '<li><button class="button" id="18-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="18">18%</button></li>' +
+          '<li><button class="button" id="20-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="20">20%</button></li>' +
+          '<li><button class="button" id="22-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="22">22%</button></li>' +
+        '</ul></div>' ;
 
 			customerContainer.html(containerCode);
 
@@ -204,7 +236,6 @@ $(document).ready(function(){
 		});
 	});
 
-
-
-
 }); // end of document.ready function
+
+
