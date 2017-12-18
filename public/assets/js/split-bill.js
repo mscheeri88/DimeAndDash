@@ -23,6 +23,30 @@ $(document).ready(function(){
 	var billItems = [];
 	var customers = [];
 
+	//calculate the tax and total for the check
+	function calcCheckTotals() {
+
+		var subTotal = 0;
+		var taxTotal = 0;
+
+		for (var i = 0; i < billItems.length; i++) {
+			if (billItems[i].customer_id == 9999) {
+				subTotal = subTotal + billItems[i].price;
+				taxTotal = taxTotal + (billItems[i].price * billItems[i].tax_percent / 100);
+			}
+		};
+
+		var total = subTotal + taxTotal;
+
+		console.log("subTotal: " + subTotal.toFixed(2));
+		console.log("taxTotal: " + taxTotal.toFixed(2));
+		console.log("total: " + total.toFixed(2));
+		$("#checkSubTotal").html("$" + subTotal.toFixed(2));
+		$("#checkTax").html("$" + taxTotal.toFixed(2));
+		$("#checkTotal").html("$" + total.toFixed(2));
+
+	}; // end of checkTotals function
+
 	// display a bill item in a customer list
 	function displayBillItem(billItemID, customerNumber) {
 	
@@ -36,7 +60,7 @@ $(document).ready(function(){
 		// create a new list item
 		var newListItem = $("<li>");
 
-		newListItem.attr("id",billItemID);
+		newListItem.attr("id","li" + billItemID);
 
 		var listItemCode =	'<span><p>' + billItems[billItemIndex].description +
 							'</p><p class="price">$' + billItems[billItemIndex].price +
@@ -86,11 +110,18 @@ $(document).ready(function(){
 			};
 		};
 
+		console.log(billItems);
+
 		// TODO remove the bill item from the current customer list
 		// this function does not delete the billItem object, just removes it from the display
+		var removeSelector = "#li" + currentBillItemID;
+		$(removeSelector).remove();
 
 		// display the bill item in the correct customer list
 		displayBillItem(currentBillItemID, currentCustomerNumber);
+
+		//recalculate check totals
+		calcCheckTotals();
 
 	}); // end of function move button click
 
@@ -102,6 +133,9 @@ $(document).ready(function(){
 		billItems = data;
 		console.log("billItems:")
 		console.log(billItems);
+
+		//calculate check totals for the initial page load
+		calcCheckTotals();
 
 		// TODO add the bill items to the check dynamically
 		// not working at the moment, to do with binding move button function
@@ -123,7 +157,20 @@ $(document).ready(function(){
 			var containerCode =	
 				'<form><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
 				'<button type="submit" class="submitVenmo" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
-				'<div class="user-items"><ul id="list' + customerNumber +'"></ul></div>';
+				'<div class="user-items"><ul id="list' + customerNumber +'"></ul>' +
+				'<ul>' +
+				'<li class="list-style-2"><span><p>Subtotal</p><p class="price" id="subTotal' + customerNumber +
+				'">$0.00</p></span></li>' +
+              	'<li class="list-style-2"><span><p>Tax</p><p class="price" id="tax' + customerNumber +
+              	'">$0.00</p></span></li>' +
+              	'<li class="list-style-2"><span><p>Tip</p><p class="price" id="tip' + customerNumber +
+              	'">$0.00</p></span></li>' +
+              	'<li class="total"><span><p>Total</p><p class="price" id="total' + customerNumber +
+              	'">$0.00</p></span></li>' +
+            	'</ul>' +
+            	'</div>';
+
+    
 
 			customerContainer.html(containerCode);
 
@@ -146,7 +193,7 @@ $(document).ready(function(){
 		$.post("/api/newCustomer", newCustomer)
 		// On success, run the following code
 		.done(function(data) {
-			// Log the data we found
+			// add the new customer to the customers object
 			console.log(data);
 			console.log("new customerID:" + data.insertId);
 			newCustomer.customerID = data.insertId;
