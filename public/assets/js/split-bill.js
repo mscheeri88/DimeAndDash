@@ -43,7 +43,7 @@ $(document).ready(function(){
 		$("#taxCheck").html("$" + taxTotal.toFixed(2));
 		$("#totalCheck").html("$" + total.toFixed(2));
 
-	}; // end of checkTotals function
+	}; // end of calcCheckTotals function
 
 	// display a bill item in a customer list
 	function displayBillItem(billItemID, customerNumber) {
@@ -123,28 +123,27 @@ $(document).ready(function(){
 
 	}); // end of function move button click
 
-  //Tip function
-function addTip() {
-  var tipPercent = $(this).val();
-  var customerNumber = $(this).attr('data-customernumber');
-  var currentCustomerID;
+	//Tip function
+	function addTip() {
+	  var tipPercent = $(this).val();
+	  var customerNumber = $(this).attr('data-customernumber');
+	  var currentCustomerID;
 
+	  // get the customer id from the customers object
+	  for (var i = 0; i < customers.length; i++) {
+	    if (customers[i].customerNumber == customerNumber) {
+	      currentCustomerID = customers[i].customerId;
 
-  for (var i = 0; i < customers.length; i++) {
-    if (customers[i].customerNumber == customerNumber) {
-      currentCustomerID = customers[i].customerId;
+	    };
+	  };
 
-    };
-  };
-
-//loop through the bill items
-// and sub-total item that = customer id
-// * the sub-total by tip percent
-
-
-};
-
-
+		//TODO loop through the bill items
+		// and sub-total item that = customer id
+		// multiply the sub-total by tip percent
+		// update the tip value on screen
+		// update the tip amount in the customers object
+	};
+  
 	// Send an AJAX GET-request for bill items
 	$.get("/api/billItems/" + billID)
 	// On success, run the following code
@@ -208,6 +207,17 @@ function addTip() {
 		$ (".customers").prepend(customerContainer);
 	};
 
+	// update the dropdowns on the bill items to have an option for each customer
+	for (var i = 3; i <= numCustomers; i++) {
+		var newOption = $("<option>");
+
+		newOption.val(i);
+		newOption.text("Customer " + i);
+
+		$ ("#list0").find(".customer-dropdown").append(newOption);
+	};
+
+
 	// click on submitVenmo button to capture venmo handle and create a customer database record
 	$(".submitVenmo").click (function(){
 		event.preventDefault();
@@ -237,5 +247,3 @@ function addTip() {
 	});
 
 }); // end of document.ready function
-
-

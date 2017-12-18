@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var hbHelpers = require("./controllers/hbHelpers.js");
 
 var port = process.env.PORT || 3000;
 
@@ -17,7 +18,12 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({ 
+	defaultLayout: "main", 
+	helpers: hbHelpers
+}));
+
+//app.engine('handlebars', hbs.engine);
 app.set("view engine", "handlebars");
 
 // Import routes and give the server access to them.
