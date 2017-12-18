@@ -21,6 +21,7 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
+    "handlebars-intl": "^1.1.2",
     "mysql": "^2.15.0"
   }
 }
