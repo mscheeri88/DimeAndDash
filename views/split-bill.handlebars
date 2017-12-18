@@ -4,19 +4,30 @@
       <!-- this div will contain a div for each customer -->
       <!-- the data-customers attribute is the number of customers -->
       <div class="column customers" data-customers={{customers}}>
+      </div>
 
         <!-- customer divs are built here dynamically -->
 
+        <!-- CUSTOMER FILLED STATE EXAMPLE -->
+<!--         <div class="user-content">
+          <input class="input" type="text" placeholder="@venmo username">
+          <div class="user-items">
+            <ul class="bill-item">
+              <li><span><p>Pizza</p><p class="price">$9.00</p></span></li>
+              <li class="list-style-2"><span><p>Tax</p><p class="price">$.90</p></span></li>
+              <li class="list-style-2"><span><p>Tip</p><p class="price">$2.00</p></span></li>
+              <li class="total"><span><p>Total</p><p class="price">$11.90</p></span></li>
+            </ul>
+          </div>
         <div>
           <button class="button submit">Submit Payment</button>
         </div>
-
       </div>
 
       <!-- this div contains the check -->
       <div class="column bill">
         <h3>the check</h3>
-        
+
         <!-- unordered list for the bill items -->
         <!-- "id=list0" indicates that this list is the original check -->
         <!-- the billID is stored as an attribute -->
@@ -24,12 +35,13 @@
           {{#each billItems}}
               <li id="li{{bill_item_id}}" data-price="{{price}}" data-tax-percent="{{tax_percent}}" data-customer-id={{customer_id}}>
                 <span>
-                  <p>{{description}}</p><p class="price">{{currency price}}</p>
-                    <select name="customers" class="customer-dropdown" id="dd{{bill_item_id}}">
+
+                  <p class="check-item">{{description}}</p><p class="price">${{price}}</p>
+                    <select class="select select-customer" name="customers" id="dd{{bill_item_id}}">
                       <option value="1">Customer 1</option>
                       <option value="2">Customer 2</option>
                     </select>
-                    <button class="move-button" id="{{bill_item_id}}">move it!</button>
+                    <button class="move-button button" id="{{bill_item_id}}">assign</button>
                 </span>
               </li>
           {{/each}}
@@ -40,7 +52,6 @@
           <li class="total"><span>Total<p id="totalCheck" class="price">$0.00</p></span></li>
         </ul>
       </div>
-    </div>
 </section>
 
 <script src="../assets/js/split-bill.js"></script>
