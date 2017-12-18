@@ -10,7 +10,25 @@ var billItem = require("../models/billItem.js");
 
 // index page
 router.get("/", function(req, res) {
-	res.render("index");
+
+	var billIDs = [];
+
+	billItem.readAll(function(data){
+
+		// add bill IDs to billIDs array
+		for (var i = 0; i < data.length; i++) {
+			if (billIDs.indexOf(data[i].bill_id) == -1) {
+				billIDs.push(data[i].bill_id)
+			};
+		};
+
+		var hbsObject = {
+			billIDs : billIDs
+		};
+		console.log(hbsObject);
+		res.render("index", hbsObject);
+	});
+
 });
 
 
