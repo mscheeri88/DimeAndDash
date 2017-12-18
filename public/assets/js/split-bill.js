@@ -47,7 +47,7 @@ $(document).ready(function(){
 
 	// display a bill item in a customer list
 	function displayBillItem(billItemID, customerNumber) {
-	
+
 		// get array position of bill item
 		for (var i = 0; i < billItems.length; i++) {
 			if (billItems[i].bill_item_id == billItemID) {
@@ -60,21 +60,21 @@ $(document).ready(function(){
 
 		newListItem.attr("id","li" + billItemID);
 
-		var listItemCode =	'<span><p>' + billItems[billItemIndex].description +
+		var listItemCode =	'<span><p class="check-item">' + billItems[billItemIndex].description +
 							'</p><p class="price">$' + billItems[billItemIndex].price +
-							'</p><select name="customers" id="' + billItemID + '">' +
+							'</p><select class="select select-customer" name="customers" id="' + billItemID + '">' +
 							'<option value="0">Return to Check</option>' +
 							'<option value="1">Customer 1</option>' +
 							'<option value="2">Customer 2</option>' +
 							'</select>' +
-							'<button class="move-button" data-bill-item-id="' + billItemID +
-							'">move it!</button></span>';
+							'<button class="move-button button" data-bill-item-id="' + billItemID +
+							'">assign</button></span>';
 
 		newListItem.html(listItemCode);
 
 		// append the new list item to the list for the correct customer
 		var listSelector = "#list" + customerNumber;
-		$(listSelector).append(newListItem);	
+		$(listSelector).append(newListItem);
 
 	}; // end of displayBillItem function
 
@@ -123,6 +123,28 @@ $(document).ready(function(){
 
 	}); // end of function move button click
 
+  //Tip function
+function addTip() {
+  var tipPercent = $(this).val();
+  var customerNumber = $(this).attr('data-customernumber');
+  var currentCustomerID;
+
+
+  for (var i = 0; i < customers.length; i++) {
+    if (customers[i].customerNumber == customerNumber) {
+      currentCustomerID = customers[i].customerId;
+
+    };
+  };
+
+//loop through the bill items
+// and sub-total item that = customer id
+// * the sub-total by tip percent
+
+
+};
+
+
 	// Send an AJAX GET-request for bill items
 	$.get("/api/billItems/" + billID)
 	// On success, run the following code
@@ -152,23 +174,34 @@ $(document).ready(function(){
 			var customerNumber = (i+1);
 			customerContainer.attr("data-containerID", customerNumber);
 
-			var containerCode =	
-				'<form><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
-				'<button type="submit" class="submitVenmo" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
-				'<div class="user-items"><ul id="list' + customerNumber +'"></ul>' +
+			var containerCode =
+				'<h3>customer ' + customerNumber + '</h3>' +
+				'<form class="venmo-form"><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
+				'<button type="submit" class="submitVenmo button" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
+				'<div class="user-items"><ul class="bill-item" id="list' + customerNumber +'"></ul>' +
 				'<ul>' +
-				'<li class="list-style-2"><span><p>Subtotal</p><p class="price" id="subTotal' + customerNumber +
+				'<li class="list-style-2"><span>Subtotal<p class="price" id="subTotal' + customerNumber +
 				'">$0.00</p></span></li>' +
-              	'<li class="list-style-2"><span><p>Tax</p><p class="price" id="tax' + customerNumber +
+              	'<li class="list-style-2"><span>Tax<p class="price" id="tax' + customerNumber +
               	'">$0.00</p></span></li>' +
-              	'<li class="list-style-2"><span><p>Tip</p><p class="price" id="tip' + customerNumber +
+              	'<li class="list-style-2"><span>Tip<p class="price" id="tip' + customerNumber +
               	'">$0.00</p></span></li>' +
-              	'<li class="total"><span><p>Total</p><p class="price" id="total' + customerNumber +
+              	'<li class="total"><span>Total<p class="price" id="total' + customerNumber +
               	'">$0.00</p></span></li>' +
             	'</ul>' +
-            	'</div>';
+            	'</div>'+
 
-    
+                      '<div><p class="select-tip">Select Tip Amount</p>' +
+        '<ul class="tip-amount">' +
+        '<li><button class="button" id="15-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+        '" value="15">15%</button></li>' +
+          '<li><button class="button" id="18-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="18">18%</button></li>' +
+          '<li><button class="button" id="20-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="20">20%</button></li>' +
+          '<li><button class="button" id="22-btn-tip' + customerNumber + '" data-customerNumber="' + customerNumber +
+          '" value="22">22%</button></li>' +
+        '</ul></div>' ;
 
 			customerContainer.html(containerCode);
 
@@ -199,11 +232,10 @@ $(document).ready(function(){
 			customers.push(newCustomer);
 
 			console.log("customers:");
-			console.log(customers);			
+			console.log(customers);
 		});
 	});
 
-
-
-
 }); // end of document.ready function
+
+
