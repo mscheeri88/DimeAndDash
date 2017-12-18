@@ -153,17 +153,18 @@ $(document).ready(function(){
 			customerContainer.attr("data-containerID", customerNumber);
 
 			var containerCode =	
+				'<h3>Customer ' + customerNumber + '</h3>' +
 				'<form><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
 				'<button type="submit" class="submitVenmo" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
-				'<div class="user-items"><ul id="list' + customerNumber +'"></ul>' +
+				'<div class="user-items"><ul class="bill-item" id="list' + customerNumber +'"></ul>' +
 				'<ul>' +
-				'<li class="list-style-2"><span><p>Subtotal</p><p class="price" id="subTotal' + customerNumber +
+				'<li class="list-style-2"><span>Subtotal<p class="price" id="subTotal' + customerNumber +
 				'">$0.00</p></span></li>' +
-              	'<li class="list-style-2"><span><p>Tax</p><p class="price" id="tax' + customerNumber +
+              	'<li class="list-style-2"><span>Tax<p class="price" id="tax' + customerNumber +
               	'">$0.00</p></span></li>' +
-              	'<li class="list-style-2"><span><p>Tip</p><p class="price" id="tip' + customerNumber +
+              	'<li class="list-style-2"><span>Tip<p class="price" id="tip' + customerNumber +
               	'">$0.00</p></span></li>' +
-              	'<li class="total"><span><p>Total</p><p class="price" id="total' + customerNumber +
+              	'<li class="total"><span>Total<p class="price" id="total' + customerNumber +
               	'">$0.00</p></span></li>' +
             	'</ul>' +
             	'</div>';
