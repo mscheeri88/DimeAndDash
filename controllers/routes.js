@@ -59,12 +59,40 @@ router.get("/api/billItems/:billID", function(req,res) {
 
 // receive new customer info and log to database
 router.post("/api/newCustomer", function(req,res) {
-	console.log("New Customer:");
+	console.log("New customer:");
 	console.log(req.body);
 	customer.create({
 		venmo_handle: req.body.venmo_handle,
 		tip_amount: req.body.tip_amount
 		},
+		function(results){
+			res.json(results);
+		}
+	);
+});
+
+// receive updated customer info and log to database
+router.post("/api/updateCustomer", function(req,res) {
+	console.log("Updated customer:");
+	console.log(req.body);
+	customer.update(
+		{tip_amount: req.body.tip_amount},
+		'customer_id',
+		req.body.customer_id,
+		function(results){
+			res.json(results);
+		}
+	);
+});
+
+// receive updated bill item info and log to database
+router.post("/api/updateBillItem", function(req,res) {
+	console.log("Updated bill item:");
+	console.log(req.body);
+	billItem.update(
+		{customer_id: req.body.customer_id},
+		'bill_item_id',
+		req.body.bill_item_id,
 		function(results){
 			res.json(results);
 		}
