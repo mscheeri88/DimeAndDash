@@ -128,7 +128,23 @@ $(document).ready(function(){
 
 		calcCheckTotals(currentCustomerNumber, currentCustomerID);
 
+		// Send an AJAX POST-request with jQuery
+		$.post(
+			"/api/updateBillItem",
+			{bill_item_id: currentBillItemID, customer_id: currentCustomerID}
+		)
+		// console log the result
+		.done(function(data) {
+			console.log(data);
+		});
+
 	}); // end of function move button click
+
+	// click on submit payment button
+	$("#submit-payment").click(function() {
+
+		console.log("submit-payment button clicked");
+	});
 
 	//Tip function
 	function addTip() {
@@ -149,6 +165,7 @@ $(document).ready(function(){
 		// multiply the sub-total by tip percent
 		// update the tip value on screen
 		// update the tip amount in the customers object
+		// Send an AJAX POST-request with jQuery
 	};
   
 	// Send an AJAX GET-request for bill items
