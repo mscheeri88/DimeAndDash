@@ -75,7 +75,7 @@ router.post("/api/newCustomer", function(req,res) {
 router.post("/api/updateCustomer", function(req,res) {
 	console.log("Updated customer:");
 	console.log(req.body);
-	billItem.update(
+	customer.update(
 		{tip_amount: req.body.tip_amount},
 		'customer_id',
 		req.body.customer_id,

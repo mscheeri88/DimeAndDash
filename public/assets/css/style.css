@@ -137,6 +137,15 @@ nav li {
   float: right;
 }
 
+.tip-label {
+  float: right;
+}
+
+.tip-value {
+  width: 60px;
+  text-align: right;
+}
+
 .list-style-2 {
   background-color: transparent !important;
 }
