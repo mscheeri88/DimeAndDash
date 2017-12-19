@@ -1,16 +1,16 @@
 
 $(document).ready(function(){
 
-// DRAGGABLE =======================================================
+		console.log("split-bill.js found");
+
+// DRAGGABLE =============================================================
   $(".main-item li").draggable({helper:"clone"});
 
   $(".user-items").droppable({drop:function(event,ui){
     $("#test").append($("<li></li>").text(ui.draggable.text()));
   }});
 
-// END OF DRAGGABLE =================================================
-
-	console.log("split-bill.js found");
+// INITIALISE VARIABLES ==================================================
 
 	// get the number of customers and the billID from the div attributes
 	var numCustomers = $(".customers").attr("data-customers");
@@ -22,6 +22,9 @@ $(document).ready(function(){
 	// initialise billItems and customers objects;
 	var billItems = [];
 	var customers = [];
+
+
+// FUNCTIONS AND EVENT HANDLERS ===========================================
 
 	//calculate the tax and total for the check
 	function calcCheckTotals(customerNumber, customerID) {
@@ -74,14 +77,7 @@ $(document).ready(function(){
 
 		var listItemCode =	'<span><p class="check-item">' + billItems[billItemIndex].description + '</p>' +
 							'<p class="price">$' + billItems[billItemIndex].price.toFixed(2) + '</p>' +
-							// TODO add a move button to a customer list item and bind the move button function 
-							//'<select class="select select-customer customer-dropdown" name="customers" id="' + billItemID + '">' +
-							//'<option value="0">Return to Check</option>' +
-							//'<option value="1">Customer 1</option>' +
-							//'<option value="2">Customer 2</option>' +
-							//'</select>' +
-							//'<button class="move-button button" data-bill-item-id="' + billItemID +
-							//'">assign</button>' +
+							// TODO add a move button to a customer list item and bind the move button function
 							'</span>';
 
 		newListItem.html(listItemCode);
@@ -156,11 +152,44 @@ $(document).ready(function(){
 		console.log("submit-payment button clicked");
 	});
 
+	// function to add the tip to the customer object, screen and database
+	function addTip(CustomerNumber, CustomerID, tipAmount) {
+
+		//add the tipAmount to the customer object
+		for (var i = 0; i < customers.length; i++) {
+	  		if(customers[i].customerID == CustomerID) {
+	  			customers[i].tip_amount = tipAmount;
+	  		};
+	  	};
+
+	  	console.log("Customers:");
+	  	console.log(customers);
+
+	  	//update the tip value on screen
+	  	var tipInputID = "#tip" + CustomerNumber;
+	  	$(tipInputID).val(parseFloat(tipAmount).toFixed(2));
+
+	  	// update the total on screen
+	  	calcCheckTotals(CustomerNumber, CustomerID);
+
+		// Send an AJAX POST-request with jQuery
+		$.post(
+			"/api/updateCustomer",
+			{customer_id: CustomerID, tip_amount: tipAmount}
+		)
+		// console log the result
+		.done(function(data) {
+			console.log(data);
+		});
+
+	}; //end of function addTip
+
 	// calculate tip if customer clicks tip button
 	$(".customers").on( "click", ".tip-button", function() {
 
 		var tipPercent = $(this).val();
 		var currentCustomerNumber = $(this).attr('data-customer-number');
+
 		var currentCustomerID;
 		var subTotal = 0;
 		var tipAmount = 0;
@@ -187,41 +216,35 @@ $(document).ready(function(){
 
 	  	tipAmount = (subTotal * tipPercent / 100).toFixed(2);
 
-		console.log("tipAmount: " + tipAmount);	  	
+		console.log("tipAmount: " + tipAmount);
 
-		//add the tipAmount to the customer object
+		addTip(currentCustomerNumber, currentCustomerID, tipAmount); 	
+
+	}); // end of tip button click
+ 
+	// calculate tip if customer enters tip value manually
+	$(".customers").on( "change", ".tip-value", function() {
+		var tipAmount = $(this).val();
+		var currentCustomerNumber = $(this).attr("data-customer-number");
+		var currentCustomerID;
+
+		// get the customer id from the customers object
 		for (var i = 0; i < customers.length; i++) {
-	  		if(customers[i].customerID == currentCustomerID) {
-	  			customers[i].tip_amount = tipAmount;
-	  		};
+		    if (customers[i].customerNumber == currentCustomerNumber) {
+		      currentCustomerID = customers[i].customerID;
+	    	};
 	  	};
 
-	  	console.log("Customers:");
-	  	console.log(customers);
+		console.log("currentCustomerNumber: " + currentCustomerNumber);
+		console.log("currentCustomerID: " + currentCustomerID);
+		console.log("tipAmount: " + tipAmount);
 
-	  	//update the tip value on screen
-	  	var tipInputID = "#tip" + currentCustomerNumber;
-	  	$(tipInputID).val(tipAmount);
+		addTip(currentCustomerNumber, currentCustomerID, tipAmount);
 
-	  	// update the total on screen
-	  	calcCheckTotals(currentCustomerNumber, currentCustomerID);
+	}); // end of change tip value event
 
-		// Send an AJAX POST-request with jQuery
-		$.post(
-			"/api/updateCustomer",
-			{customer_id: currentCustomerID, tip_amount: tipAmount}
-		)
-		// console log the result
-		.done(function(data) {
-			console.log(data);
-		});
 
-	});
- 
-	// TODO if customer enters tip value manually
-	$(".customers").on( "change", ".tip-value", function() {
-		console.log("tip amount: " + this.value);
-	});
+// BUILD INITIAL PAGE ELEMENTS ======================================================
 
 	// Send an AJAX GET-request for bill items
 	$.get("/api/billItems/" + billID)
@@ -260,7 +283,8 @@ $(document).ready(function(){
               	'<li class="list-style-2"><span>Tax<p class="price" id="tax' + customerNumber +
               	'">$0.00</p></span></li>' +
               	'<li class="list-style-2"><span>Tip' +
-              	'<input type="text" class="tip-value price" value="0.00" id="tip' + customerNumber + '">' +
+              	'<input type="text" class="tip-value price" value="0.00" ' +
+              	'data-customer-number="' + customerNumber + '" id="tip' + customerNumber + '">' +
               	'<label class="tip-label" for="tip' + customerNumber + '">$</label>' +
               	'</span></li>' +
               	'<li class="total"><span>Total<p class="price" id="total' + customerNumber +
@@ -293,33 +317,32 @@ $(document).ready(function(){
 		$ ("#list0").find(".customer-dropdown").append(newOption);
 	};
 
-
 	// click on submitVenmo button to capture venmo handle and create a customer database record
-	$(".submitVenmo").click (function(){
-		event.preventDefault();
-		var currentCustomer = $(this).attr("data-customerNumber");
-		var inputSelector = "#input" + currentCustomer;
-		console.log("clicked submit button for customer " + currentCustomer);
+		$(".submitVenmo").click (function(){
+			event.preventDefault();
+			var currentCustomer = $(this).attr("data-customerNumber");
+			var inputSelector = "#input" + currentCustomer;
+			console.log("clicked submit button for customer " + currentCustomer);
 
-		var newCustomer = {
-			venmo_handle: $(inputSelector).val().trim(),
-			tip_amount: 0
-		};
+			var newCustomer = {
+				venmo_handle: $(inputSelector).val().trim(),
+				tip_amount: 0
+			};
 
-		// Send an AJAX POST-request with jQuery
-		$.post("/api/newCustomer", newCustomer)
-		// On success, run the following code
-		.done(function(data) {
-			// add the new customer to the customers object
-			console.log(data);
-			console.log("new customerID:" + data.insertId);
-			newCustomer.customerID = data.insertId;
-			newCustomer.customerNumber = currentCustomer;
-			customers.push(newCustomer);
+			// Send an AJAX POST-request with jQuery
+			$.post("/api/newCustomer", newCustomer)
+			// On success, run the following code
+			.done(function(data) {
+				// add the new customer to the customers object
+				console.log(data);
+				console.log("new customerID:" + data.insertId);
+				newCustomer.customerID = data.insertId;
+				newCustomer.customerNumber = currentCustomer;
+				customers.push(newCustomer);
 
-			console.log("customers:");
-			console.log(customers);
+				console.log("customers:");
+				console.log(customers);
+			});
 		});
-	});
 
 }); // end of document.ready function
