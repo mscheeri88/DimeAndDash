@@ -1,6 +1,7 @@
 -- drop database if exists dimeanddash_db;
 
 -- create database dimeanddash_db;
+
 -- use dimeanddash_db;
 
 use ouo5dh9jj3gq0fvn;
