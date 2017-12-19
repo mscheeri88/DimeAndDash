@@ -156,11 +156,44 @@ $(document).ready(function(){
 		console.log("submit-payment button clicked");
 	});
 
+	// function to add the tip to the customer object, screen and database
+	function addTip(CustomerNumber, CustomerID, tipAmount) {
+
+		//add the tipAmount to the customer object
+		for (var i = 0; i < customers.length; i++) {
+	  		if(customers[i].customerID == CustomerID) {
+	  			customers[i].tip_amount = tipAmount;
+	  		};
+	  	};
+
+	  	console.log("Customers:");
+	  	console.log(customers);
+
+	  	//update the tip value on screen
+	  	var tipInputID = "#tip" + CustomerNumber;
+	  	$(tipInputID).val(tipAmount);
+
+	  	// update the total on screen
+	  	calcCheckTotals(CustomerNumber, CustomerID);
+
+		// Send an AJAX POST-request with jQuery
+		$.post(
+			"/api/updateCustomer",
+			{customer_id: CustomerID, tip_amount: tipAmount}
+		)
+		// console log the result
+		.done(function(data) {
+			console.log(data);
+		});
+
+	}; //end of function  addTip
+
 	// calculate tip if customer clicks tip button
 	$(".customers").on( "click", ".tip-button", function() {
 
 		var tipPercent = $(this).val();
 		var currentCustomerNumber = $(this).attr('data-customer-number');
+
 		var currentCustomerID;
 		var subTotal = 0;
 		var tipAmount = 0;
@@ -187,38 +220,13 @@ $(document).ready(function(){
 
 	  	tipAmount = (subTotal * tipPercent / 100).toFixed(2);
 
-		console.log("tipAmount: " + tipAmount);	  	
+		console.log("tipAmount: " + tipAmount);
 
-		//add the tipAmount to the customer object
-		for (var i = 0; i < customers.length; i++) {
-	  		if(customers[i].customerID == currentCustomerID) {
-	  			customers[i].tip_amount = tipAmount;
-	  		};
-	  	};
+		addTip(currentCustomerNumber, currentCustomerID, tipAmount); 	
 
-	  	console.log("Customers:");
-	  	console.log(customers);
-
-	  	//update the tip value on screen
-	  	var tipInputID = "#tip" + currentCustomerNumber;
-	  	$(tipInputID).val(tipAmount);
-
-	  	// update the total on screen
-	  	calcCheckTotals(currentCustomerNumber, currentCustomerID);
-
-		// Send an AJAX POST-request with jQuery
-		$.post(
-			"/api/updateCustomer",
-			{customer_id: currentCustomerID, tip_amount: tipAmount}
-		)
-		// console log the result
-		.done(function(data) {
-			console.log(data);
-		});
-
-	});
+	}); // end of tip button click
  
-	// TODO if customer enters tip value manually
+	// TODO calculate tip if customer enters tip value manually
 	$(".customers").on( "change", ".tip-value", function() {
 		console.log("tip amount: " + this.value);
 	});
