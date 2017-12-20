@@ -71,6 +71,46 @@ router.post("/api/newCustomer", function(req,res) {
 	);
 });
 
+
+// to view table - view all sales of a specific item
+router.get("/item-sales", function(req, res) {
+	console.log(req.params);
+
+	// retrieve the bill items
+	billItem.readAll(function(data) {
+		var cleanObjArray = [];
+		var itemNames = [];
+		for (var i = 0; i < data.length; i ++) {
+			if (itemNames.indexOf(data[i].description) === -1) {
+				itemNames.push(data[i].description);
+			}
+		}
+
+		for (var i = 0; i < itemNames.length; i++) {
+			var currentName = itemNames[i];
+			var quantity = 0;
+			var price = 0;
+			for (var k = 0; k < data.length; k ++) {
+				if (itemNames[i] === data[k].description) {
+					price = data[k].price
+					quantity++
+				}
+			}
+			var objToDisplay = {}
+			objToDisplay.name = currentName;
+			objToDisplay.quantity = quantity;
+			objToDisplay.price = price;
+			objToDisplay.totalSales = price * quantity;
+			cleanObjArray.push(objToDisplay);
+		}
+
+		var itemSaleObject = {
+			billItems: cleanObjArray,
+		};
+		res.render("item-sale-table", itemSaleObject);
+	});
+});
+
 // receive updated customer info and log to database
 router.post("/api/updateCustomer", function(req,res) {
 	console.log("Updated customer:");

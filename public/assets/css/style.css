@@ -194,6 +194,19 @@ li {
   width: 100%;
 }
 
+/* TABLE STYLES */
+
+.table-container {
+  width: 700px;
+  margin: 0 auto;
+  padding-top: 50px;
+
+}
+
+  table {
+    width: 100%;
+  }
+
 /*VENMO USERNAME*/
 .venmo-form .input {
   display: inline-block;
