@@ -92,6 +92,23 @@ nav li {
   text-align: center;
 }
 
+.select-id .select {
+  display: inline-block;
+}
+
+.select-id h2 {
+  display: inline-block;
+  margin: 3px 10px 30px 0;
+}
+
+#billID {
+    font-weight: bold;
+    color: #5965E5;
+    border: 2px solid #5965E5;
+    background-color: rgba(89, 101, 229, 0.05);
+    height: 40px;
+}
+
 /*DIVY UP BILL INTERFACE*/
 .main-interface {
   max-width: 1400px;
@@ -114,15 +131,27 @@ nav li {
 
 .bill-item p {
   display: inline-block;
-  padding: 10px;
 }
 
 .price {
   float: right;
 }
 
+.tip-label {
+  float: right;
+}
+
+.tip-value {
+  width: 60px;
+  text-align: right;
+}
+
 .list-style-2 {
   background-color: transparent !important;
+}
+
+li {
+  padding: 10px;
 }
 
 .total {
@@ -177,3 +206,46 @@ nav li {
   table {
     width: 100%;
   }
+
+/*VENMO USERNAME*/
+.venmo-form .input {
+  display: inline-block;
+  width: calc(100% - 100px);
+}
+
+.venmo-form .submitVenmo {
+  display: inline-block;
+  width: 100px;
+  border: none;
+  height: 38px
+}
+
+
+.check-item, .select-customer {
+  display: inline-block;
+}
+
+.check-item {
+  margin-right: 5px;
+}
+
+.select.select-customer {
+  border: none;
+  background-color: rgba(89, 101, 229, 0.05);
+}
+
+.move-button {
+  width: 55px;
+  height: 24px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  margin-top: -1px;
+  margin-bottom: 10px;
+}
+
+.move-button:hover {
+  background-color: transparent;
+  color: #525358;
+  border: none;
+}

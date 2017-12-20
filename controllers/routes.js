@@ -10,7 +10,25 @@ var billItem = require("../models/billItem.js");
 
 // index page
 router.get("/", function(req, res) {
-	res.render("index");
+
+	var billIDs = [];
+
+	billItem.readAll(function(data){
+
+		// add bill IDs to billIDs array
+		for (var i = 0; i < data.length; i++) {
+			if (billIDs.indexOf(data[i].bill_id) == -1) {
+				billIDs.push(data[i].bill_id)
+			};
+		};
+
+		var hbsObject = {
+			billIDs : billIDs
+		};
+		console.log(hbsObject);
+		res.render("index", hbsObject);
+	});
+
 });
 
 
@@ -41,7 +59,7 @@ router.get("/api/billItems/:billID", function(req,res) {
 
 // receive new customer info and log to database
 router.post("/api/newCustomer", function(req,res) {
-	console.log("New Customer:");
+	console.log("New customer:");
 	console.log(req.body);
 	customer.create({
 		venmo_handle: req.body.venmo_handle,
@@ -52,6 +70,7 @@ router.post("/api/newCustomer", function(req,res) {
 		}
 	);
 });
+
 
 // to view table - view all sales of a specific item
 router.get("/item-sales", function(req, res) {
@@ -92,5 +111,32 @@ router.get("/item-sales", function(req, res) {
 	});
 });
 
+// receive updated customer info and log to database
+router.post("/api/updateCustomer", function(req,res) {
+	console.log("Updated customer:");
+	console.log(req.body);
+	customer.update(
+		{tip_amount: req.body.tip_amount},
+		'customer_id',
+		req.body.customer_id,
+		function(results){
+			res.json(results);
+		}
+	);
+});
+
+// receive updated bill item info and log to database
+router.post("/api/updateBillItem", function(req,res) {
+	console.log("Updated bill item:");
+	console.log(req.body);
+	billItem.update(
+		{customer_id: req.body.customer_id},
+		'bill_item_id',
+		req.body.bill_item_id,
+		function(results){
+			res.json(results);
+		}
+	);
+});
 
 module.exports = router;

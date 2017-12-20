@@ -2,6 +2,8 @@
 
 -- create database dimeanddash_db;
 
+-- use dimeanddash_db;
+
 use ouo5dh9jj3gq0fvn;
 
 -- the customer table holds the venmo handle and the tip amount

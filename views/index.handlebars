@@ -1,15 +1,20 @@
 <section class="section select-customers">
   <div class="container">
-    <h1 class="title">
-      let's get started
-    </h1>
-    <h2>
-      Enter the Bill ID
-    </h2>
-    <input type="text" name="billID" id="billID"></input>
-    <h2>
-      Select the number of customers that will split the bill.
-    </h2>
+
+    <h1 class="title">let's get started</h1>
+
+    <div class="select-id">
+      <h2>First, Select the Bill ID</h2>
+      <div class="select">
+        <select name="billID" id="billID">
+        {{#each billIDs}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+        </select>
+      </div>
+    </div>
+
+    <h2>Second, select the number of customers that will split the bill.</h2>
     <a class="button customer-button" value="2">2 Customers</a><br>
     <a class="button customer-button" value="3">3 Customers</a><br>
     <a class="button customer-button" value="4">4 Customers</a><br>
