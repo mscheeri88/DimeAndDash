@@ -84,7 +84,7 @@ nav li {
   text-transform: uppercase;
   font-weight: 700;
   display: block;
-  margin: -27px 50px 0 0;
+  margin: -38px 50px 0 0;
 }
 
 /*SELECT CUSTOMERS*/
@@ -193,6 +193,19 @@ li {
 .submit {
   width: 100%;
 }
+
+/* TABLE STYLES */
+
+.table-container {
+  width: 700px;
+  margin: 0 auto;
+  padding-top: 50px;
+
+}
+
+  table {
+    width: 100%;
+  }
 
 /*VENMO USERNAME*/
 .venmo-form .input {

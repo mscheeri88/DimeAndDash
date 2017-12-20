@@ -1,0 +1,21 @@
+<div class="container table-container">
+  <table class="table is-striped">
+    <tbody>
+      <tr>
+        <th>Item Description</th>
+        <th>Price Per Item</th>
+        <th>Quantity Sold</th>
+        <th>Total Sales</th>
+      </tr>
+      {{#each billItems}}
+      <tr>
+        <td class="item-description-id">{{name}}</td>
+        <td>{{currency price}}</td>
+        <td>{{quantity}}</td>
+        <td>{{currency totalSales}}</td>
+      </tr>
+      {{/each}}
+
+    </tbody>
+  </table>
+</div>
