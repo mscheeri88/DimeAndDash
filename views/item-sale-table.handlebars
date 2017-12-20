@@ -10,9 +10,9 @@
       {{#each billItems}}
       <tr>
         <td class="item-description-id">{{name}}</td>
-        <td>${{price}}</td>
+        <td>{{currency price}}</td>
         <td>{{quantity}}</td>
-        <td>${{totalSales}}</td>
+        <td>{{currency totalSales}}</td>
       </tr>
       {{/each}}
 
