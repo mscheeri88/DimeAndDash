@@ -4,19 +4,18 @@
       <tr>
         <th>Item Description</th>
         <th>Price Per Item</th>
+        <th>Quantity Sold</th>
         <th>Total Sales</th>
       </tr>
-      <tr>
       {{#each billItems}}
-        <td>{{description}}</td>
+      <tr>
+        <td class="item-description-id">{{name}}</td>
         <td>${{price}}</td>
-        <td>Total Sales</td>
-      {{/each}}
+        <td>{{quantity}}</td>
+        <td>${{totalSales}}</td>
       </tr>
+      {{/each}}
 
     </tbody>
   </table>
 </div>
-
-
-<script src="../assets/js/split-bill.js"></script>
