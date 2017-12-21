@@ -4,14 +4,14 @@
       <tr>
         <th>Venmo Handle</th>
         <th>Description</th>
-        <th>Price</th>
+        <th>Price</th
       </tr>
       {{#each billItems}}
       <tr>
-        <td class="item-description-id">{{venmo_handle}}</td>
-        <td>{{description}}</td>
-        
+        <td class="item-description-id">{{name}}</td>
         <td>{{currency price}}</td>
+        <td>{{quantity}}</td>
+        <td>{{currency totalSales}}</td>
       </tr>
       {{/each}}
 
