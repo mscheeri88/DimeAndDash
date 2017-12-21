@@ -1,4 +1,4 @@
-
+// enter venmo handle to generate customer report
 
 $( "#handle-button" ).click(function() {
 	console.log("button clicked");

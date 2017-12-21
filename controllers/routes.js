@@ -48,6 +48,7 @@ router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
 	});
 });
 
+// get the bill itmes for a specific bill ID
 router.get("/api/billItems/:billID", function(req,res) {
 	console.log(req.params);
 
@@ -71,8 +72,38 @@ router.post("/api/newCustomer", function(req,res) {
 	);
 });
 
+// receive updated bill item info and log to database
+router.post("/api/updateBillItem", function(req,res) {
+	console.log("Updated bill item:");
+	console.log(req.body);
+	billItem.update(
+		{customer_id: req.body.customer_id},
+		'bill_item_id',
+		req.body.bill_item_id,
+		function(results){
+			res.json(results);
+		}
+	);
+});
 
-// to view table - view all sales of a specific item
+// receive updated customer info and log to database
+router.post("/api/updateCustomer", function(req,res) {
+	console.log("Updated customer:");
+	console.log(req.body);
+	customer.update(
+		{tip_amount: req.body.tip_amount},
+		'customer_id',
+		req.body.customer_id,
+		function(results){
+			res.json(results);
+		}
+	);
+});
+
+
+// REPORTS ========================================================
+
+// view all sales by item description
 router.get("/item-sales", function(req, res) {
 	console.log(req.params);
 
@@ -111,40 +142,15 @@ router.get("/item-sales", function(req, res) {
 	});
 });
 
-// receive updated customer info and log to database
-router.post("/api/updateCustomer", function(req,res) {
-	console.log("Updated customer:");
-	console.log(req.body);
-	customer.update(
-		{tip_amount: req.body.tip_amount},
-		'customer_id',
-		req.body.customer_id,
-		function(results){
-			res.json(results);
-		}
-	);
-});
 
-// receive updated bill item info and log to database
-router.post("/api/updateBillItem", function(req,res) {
-	console.log("Updated bill item:");
-	console.log(req.body);
-	billItem.update(
-		{customer_id: req.body.customer_id},
-		'bill_item_id',
-		req.body.bill_item_id,
-		function(results){
-			res.json(results);
-		}
-	);
-});
-
-//Routes:
-
+// view sales by venmo handle
+// page for user to enter venmo handle
 router.get("/venmoHandle", function(req, res) {
 	res.render("venmoHandle");
 });
 
+
+// generate report page
 router.get("/customerReport/handle=:venmoHandle", function(req, res) {
 	console.log(req.params);
 

@@ -3,7 +3,7 @@ $(document).ready(function(){
 
 		console.log("split-bill.js found");
 
-// DRAGGABLE =============================================================
+// DRAGGABLE NOT WORKING =============================================================
   $(".main-item li").draggable({helper:"clone"});
 
   $(".user-items").droppable({drop:function(event,ui){
@@ -24,9 +24,11 @@ $(document).ready(function(){
 	var customers = [];
 
 
-// FUNCTIONS AND EVENT HANDLERS ===========================================
+// FUNCTIONS =============================================================
 
-	//calculate the tax and total for the check
+	// calculate the check total
+	// can be used either for the whole check, customerNumber = 0,
+	// or an individual customer, customerNumber = 1 or greater
 	function calcCheckTotals(customerNumber, customerID) {
 
 		var subTotal = 0;
@@ -41,7 +43,7 @@ $(document).ready(function(){
 			}
 		};
 
-		// if the total is for a customer, get tip amount from input box
+		// if the total is for a customer, not the check, get tip amount from input box
 		if (customerNumber > 0) {
 			var tipInputID = "#tip" + customerNumber;
 			tipAmount = $(tipInputID).val();
@@ -50,7 +52,7 @@ $(document).ready(function(){
 
 		var total = subTotal + taxTotal + parseFloat(tipAmount);
 
-		// display totals on the check
+		// display totals
 		var subTotalSelector = "#subTotal" + customerNumber;
 		var taxSelector = "#tax" + customerNumber;
 		var totalSelector = "#total" + customerNumber;
@@ -59,6 +61,7 @@ $(document).ready(function(){
 		$(totalSelector).html("$" + total.toFixed(2));
 
 	}; // end of calcCheckTotals function
+
 
 	// display a bill item in a customer list
 	function displayBillItem(billItemID, customerNumber) {
@@ -77,8 +80,10 @@ $(document).ready(function(){
 
 		var listItemCode =	'<span><p class="check-item">' + billItems[billItemIndex].description + '</p>' +
 							'<p class="price">$' + billItems[billItemIndex].price.toFixed(2) + '</p>' +
-							// TODO add a move button to a customer list item and bind the move button function
 							'</span>';
+							// TODO add a move button to a customer list item and bind the move button function
+							// so that items can  be moved from a customer list back to the check
+							// or to another customer list
 
 		newListItem.html(listItemCode);
 
@@ -87,6 +92,72 @@ $(document).ready(function(){
 		$(listSelector).append(newListItem);
 
 	}; // end of displayBillItem function
+
+
+	// function to add the tip to the customer object, screen and database
+	function addTip(CustomerNumber, CustomerID, tipAmount) {
+
+		//add the tipAmount to the customer object
+		for (var i = 0; i < customers.length; i++) {
+	  		if(customers[i].customerID == CustomerID) {
+	  			customers[i].tip_amount = tipAmount;
+	  		};
+	  	};
+
+	  	console.log("Customers:");
+	  	console.log(customers);
+
+	  	//update the tip value on screen
+	  	var tipInputID = "#tip" + CustomerNumber;
+	  	$(tipInputID).val(parseFloat(tipAmount).toFixed(2));
+
+	  	// update the total on screen
+	  	calcCheckTotals(CustomerNumber, CustomerID);
+
+		// Send an AJAX POST-request with jQuery
+		$.post(
+			"/api/updateCustomer",
+			{customer_id: CustomerID, tip_amount: tipAmount}
+		)
+		// console log the result
+		.done(function(data) {
+			console.log(data);
+		});
+
+	}; //end of function addTip
+
+
+// EVENT HANDLERS ==============================================================
+
+	// click on submitVenmo button to capture venmo handle
+	// and create a customer database record
+	$(".customers").on( "click", ".submitVenmo", function() {
+		event.preventDefault();
+		var currentCustomer = $(this).attr("data-customerNumber");
+		var inputSelector = "#input" + currentCustomer;
+		console.log("clicked submit button for customer " + currentCustomer);
+
+		var newCustomer = {
+			venmo_handle: $(inputSelector).val().trim(),
+			tip_amount: 0
+		};
+
+		// Send an AJAX POST-request with jQuery
+		$.post("/api/newCustomer", newCustomer)
+		// On success, run the following code
+		.done(function(data) {
+			// add the new customer to the customers object
+			console.log(data);
+			console.log("new customerID:" + data.insertId);
+			newCustomer.customerID = data.insertId;
+			newCustomer.customerNumber = currentCustomer;
+			customers.push(newCustomer);
+
+			console.log("customers:");
+			console.log(customers);
+		});
+	});
+
 
 	// click on move button
 	$(".move-button").click(function() {
@@ -128,7 +199,7 @@ $(document).ready(function(){
 		// display the bill item in the correct customer list
 		displayBillItem(currentBillItemID, currentCustomerNumber);
 
-		//recalculate check totals
+		// recalculate check totals
 		// for the check, customerNumber = 0 and customerID = 9999
 		calcCheckTotals(0, 9999);
 
@@ -144,45 +215,8 @@ $(document).ready(function(){
 			console.log(data);
 		});
 
-	}); // end of function move button click
+	}); // end of move button click
 
-	// click on submit payment button
-	$("#submit-payment").click(function() {
-
-		console.log("submit-payment button clicked");
-	});
-
-	// function to add the tip to the customer object, screen and database
-	function addTip(CustomerNumber, CustomerID, tipAmount) {
-
-		//add the tipAmount to the customer object
-		for (var i = 0; i < customers.length; i++) {
-	  		if(customers[i].customerID == CustomerID) {
-	  			customers[i].tip_amount = tipAmount;
-	  		};
-	  	};
-
-	  	console.log("Customers:");
-	  	console.log(customers);
-
-	  	//update the tip value on screen
-	  	var tipInputID = "#tip" + CustomerNumber;
-	  	$(tipInputID).val(parseFloat(tipAmount).toFixed(2));
-
-	  	// update the total on screen
-	  	calcCheckTotals(CustomerNumber, CustomerID);
-
-		// Send an AJAX POST-request with jQuery
-		$.post(
-			"/api/updateCustomer",
-			{customer_id: CustomerID, tip_amount: tipAmount}
-		)
-		// console log the result
-		.done(function(data) {
-			console.log(data);
-		});
-
-	}; //end of function addTip
 
 	// calculate tip if customer clicks tip button
 	$(".customers").on( "click", ".tip-button", function() {
@@ -222,6 +256,7 @@ $(document).ready(function(){
 
 	}); // end of tip button click
  
+
 	// calculate tip if customer enters tip value manually
 	$(".customers").on( "change", ".tip-value", function() {
 		var tipAmount = $(this).val();
@@ -241,8 +276,15 @@ $(document).ready(function(){
 
 		addTip(currentCustomerNumber, currentCustomerID, tipAmount);
 
-	}); // end of change tip value event
+	}); // end of tip manual input event
 
+
+	// click on submit payment button
+	$("#submit-payment").click(function() {
+
+		alert("Payment received, thank you!");
+
+	}); // end of submit payment button click
 
 // BUILD INITIAL PAGE ELEMENTS ======================================================
 
@@ -262,6 +304,7 @@ $(document).ready(function(){
 		// TODO add the bill items to the check dynamically
 		// not working at the moment, to do with binding move button function
 	});
+
 
 	// create a div for each customer
 	for (var i = 0; i < numCustomers; i++) {
@@ -307,6 +350,7 @@ $(document).ready(function(){
 		$ ("#payment-container").before(customerContainer);
 	};
 
+
 	// update the dropdowns on the bill items to have an option for each customer
 	for (var i = 3; i <= numCustomers; i++) {
 		var newOption = $("<option>");
@@ -316,33 +360,5 @@ $(document).ready(function(){
 
 		$ ("#list0").find(".customer-dropdown").append(newOption);
 	};
-
-	// click on submitVenmo button to capture venmo handle and create a customer database record
-		$(".submitVenmo").click (function(){
-			event.preventDefault();
-			var currentCustomer = $(this).attr("data-customerNumber");
-			var inputSelector = "#input" + currentCustomer;
-			console.log("clicked submit button for customer " + currentCustomer);
-
-			var newCustomer = {
-				venmo_handle: $(inputSelector).val().trim(),
-				tip_amount: 0
-			};
-
-			// Send an AJAX POST-request with jQuery
-			$.post("/api/newCustomer", newCustomer)
-			// On success, run the following code
-			.done(function(data) {
-				// add the new customer to the customers object
-				console.log(data);
-				console.log("new customerID:" + data.insertId);
-				newCustomer.customerID = data.insertId;
-				newCustomer.customerNumber = currentCustomer;
-				customers.push(newCustomer);
-
-				console.log("customers:");
-				console.log(customers);
-			});
-		});
 
 }); // end of document.ready function
