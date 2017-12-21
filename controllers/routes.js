@@ -13,6 +13,34 @@ router.get("/", function(req, res) {
 	res.render("index");
 });
 
+router.get("/venmoHandle", function(req, res) {
+	res.render("venmoHandle");
+});
+
+router.get("/customerReport/handle=:venmoHandle", function(req, res) {
+	console.log(req.params);
+
+	var queryString =
+
+	"SELECT customer.venmo_handle, bill_item.description, bill_item.price FROM customer LEFT JOIN bill_item ON customer.customer_id = bill_item.customer_id where customer.venmo_handle ='"+ req.params.venmoHandle + "'";
+
+	connection.query(queryString, function(err, result) {
+		if (err) {
+		  throw err;
+		}
+		else{
+			console.log("result");
+			console.log(result);
+
+			var hbsObject = {
+				billItems: result
+			};
+		};
+		res.render("customerReport", hbsObject);
+	  });
+
+
+});
 
 // use parameters to build the split-bill page
 router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
