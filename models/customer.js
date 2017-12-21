@@ -1,6 +1,7 @@
 // dependencies
 var orm = require("../config/orm.js");
 
+// database queries related to the customer table
 var customer = {
 	all: function(cb) {
 		orm.selectAll("customer", function(res) {

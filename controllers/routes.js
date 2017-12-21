@@ -48,6 +48,7 @@ router.get("/split-bill/cust=:customers&billID=:billID", function(req, res) {
 	});
 });
 
+// get the bill itmes for a specific bill ID
 router.get("/api/billItems/:billID", function(req,res) {
 	console.log(req.params);
 
@@ -71,8 +72,38 @@ router.post("/api/newCustomer", function(req,res) {
 	);
 });
 
+// receive updated bill item info and log to database
+router.post("/api/updateBillItem", function(req,res) {
+	console.log("Updated bill item:");
+	console.log(req.body);
+	billItem.update(
+		{customer_id: req.body.customer_id},
+		'bill_item_id',
+		req.body.bill_item_id,
+		function(results){
+			res.json(results);
+		}
+	);
+});
 
-// to view table - view all sales of a specific item
+// receive updated customer info and log to database
+router.post("/api/updateCustomer", function(req,res) {
+	console.log("Updated customer:");
+	console.log(req.body);
+	customer.update(
+		{tip_amount: req.body.tip_amount},
+		'customer_id',
+		req.body.customer_id,
+		function(results){
+			res.json(results);
+		}
+	);
+});
+
+
+// REPORTS ========================================================
+
+// view all sales by item description
 router.get("/item-sales", function(req, res) {
 	console.log(req.params);
 
@@ -111,32 +142,37 @@ router.get("/item-sales", function(req, res) {
 	});
 });
 
-// receive updated customer info and log to database
-router.post("/api/updateCustomer", function(req,res) {
-	console.log("Updated customer:");
-	console.log(req.body);
-	customer.update(
-		{tip_amount: req.body.tip_amount},
-		'customer_id',
-		req.body.customer_id,
-		function(results){
-			res.json(results);
-		}
-	);
+
+// view sales by venmo handle
+// page for user to enter venmo handle
+router.get("/venmoHandle", function(req, res) {
+	res.render("venmoHandle");
 });
 
-// receive updated bill item info and log to database
-router.post("/api/updateBillItem", function(req,res) {
-	console.log("Updated bill item:");
-	console.log(req.body);
-	billItem.update(
-		{customer_id: req.body.customer_id},
-		'bill_item_id',
-		req.body.bill_item_id,
-		function(results){
-			res.json(results);
+
+// generate report page
+router.get("/customerReport/handle=:venmoHandle", function(req, res) {
+	console.log(req.params);
+
+	var queryString =
+
+	"SELECT customer.venmo_handle, bill_item.description, bill_item.price FROM customer LEFT JOIN bill_item ON customer.customer_id = bill_item.customer_id where customer.venmo_handle ='"+ req.params.venmoHandle + "'";
+
+	connection.query(queryString, function(err, result) {
+		if (err) {
+		  throw err;
 		}
-	);
+		else{
+			console.log("result");
+			console.log(result);
+
+			var hbsObject = {
+				billItems: result
+			};
+		};
+		res.render("customerReport", hbsObject);
+	  });
+
 });
 
 module.exports = router;

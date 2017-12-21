@@ -1,12 +1,14 @@
 // dependencies
 var orm = require("../config/orm.js");
 
+// database queries related to the bill_item table
 var billItem = {
 	readAll: function(cb) {
 		orm.selectAll("bill_item", function(res) {
 		  cb(res);
 		});
 	},
+	// searchCol and searchVal indicate which records are to be retrieved
 	readOne: function(searchCol, searchVal, cb) {
 		orm.selectOne("bill_item", searchCol, searchVal, function(res) {
 		  cb(res);

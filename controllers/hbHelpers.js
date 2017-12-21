@@ -1,3 +1,5 @@
+// formatting for handlebars
+
 var hbHelpers = {
 		currency : 	function (inputNumber) {
 						return "$" + inputNumber.toFixed(2);

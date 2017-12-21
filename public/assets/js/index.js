@@ -1,13 +1,6 @@
 
 $(document).ready(function(){
 
-  $(".main-item li").draggable({helper:"clone"});
-
-  $(".user-items").droppable({drop:function(event,ui){
-    $("#test").append($("<li></li>").text(ui.draggable.text()));
-  }});
-
-
 	console.log("index.js found");
 
 	// click on customer button on index page
