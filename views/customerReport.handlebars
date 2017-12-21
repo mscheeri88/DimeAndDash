@@ -1,0 +1,19 @@
+<div class="container table-container">
+  <table class="table is-striped">
+    <tbody>
+      <tr>
+        <th>Venmo Handle</th>
+        <th>Description</th>
+        <th>Price</th
+      </tr>
+      {{#each billItems}}
+      <tr>
+        <td class="item-description-id">{{venmo_handle}}</td>
+        <td>{{description}}</td>
+        <td>{{price}}</td>
+      </tr>
+      {{/each}}
+
+    </tbody>
+  </table>
+</div>
