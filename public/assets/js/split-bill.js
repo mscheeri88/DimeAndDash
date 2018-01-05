@@ -155,9 +155,24 @@ $(document).ready(function(){
 
 			console.log("customers:");
 			console.log(customers);
+
+			// disable the submitVenmo button and text input
+			var buttonID = "#submit" + currentCustomer;
+			$(buttonID).attr("disabled","disabled");
+
+			var inputID = "#input" + currentCustomer;
+			$(inputID).attr("disabled","disabled");
+
+			// if all venmo details have been submitted,
+			// show the check, customer subtotals and submit payment button
+			if (customers.length == numCustomers) {
+				$("#theCheck").css("visibility", "visible");
+				$("#submit-payment").css("visibility", "visible");
+				$(".user-items").show();
+				$(".tip-options").show();
+			};
 		});
 	});
-
 
 	// click on move button
 	$(".move-button").click(function() {
@@ -283,6 +298,7 @@ $(document).ready(function(){
 	$("#submit-payment").click(function() {
 
 		alert("Payment received, thank you!");
+		location.href = "/";
 
 	}); // end of submit payment button click
 
@@ -318,7 +334,7 @@ $(document).ready(function(){
 			var containerCode =
 				'<h3>customer ' + customerNumber + '</h3>' +
 				'<form class="venmo-form"><input class="input" type="text" placeholder="@venmo username" id="input' + customerNumber + '">' +
-				'<button type="submit" class="submitVenmo button" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
+				'<button type="submit" class="submitVenmo button" id="submit' + customerNumber + '" data-customerNumber=' + customerNumber +'>Submit</button></form>' +
 				'<div class="user-items"><ul class="bill-item" id="list' + customerNumber +'"></ul>' +
 				'<ul class="customer-totals">' +
 				'<li class="list-style-2"><span>Subtotal<p class="price" id="subTotal' + customerNumber +
@@ -333,7 +349,7 @@ $(document).ready(function(){
               	'<li class="total"><span>Total<p class="price" id="total' + customerNumber +
               	'">$0.00</p></span></li>' +
             	'</ul></div>'+
-                '<div><p class="select-tip">Select Tip Amount</p>' +
+                '<div class="tip-options"><p class="select-tip">Select Tip Amount</p>' +
         		'<ul class="tip-amount">' +
 		        '<li><button class="button tip-button" id="15-btn-tip' + customerNumber + '" data-customer-number="' + customerNumber +
 		        '" value="15">15%</button></li>' +
@@ -360,5 +376,12 @@ $(document).ready(function(){
 
 		$ ("#list0").find(".customer-dropdown").append(newOption);
 	};
+
+	// hide the check, customer subtotals and submit payment button
+	// these will be displayed once venmo details have been provided
+	$("#theCheck").css("visibility", "hidden");
+	$("#submit-payment").css("visibility", "hidden");
+	$(".user-items").hide();
+	$(".tip-options").hide();
 
 }); // end of document.ready function
