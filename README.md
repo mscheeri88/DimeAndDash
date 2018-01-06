@@ -43,7 +43,6 @@ npm install body-parse
 npm install method-override
 npm install express-handlebars
 
-
 ```
 
 ## We used the following to develop our application
