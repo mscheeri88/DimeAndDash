@@ -1,6 +1,14 @@
 # Dime&Dash
 
-# Dima&Dash
+### Team Members
+
+* **Mark Walker**
+* **Mike Scheeringa**
+* **Victoria Palacios**
+* **Vanaro Thorn**
+
+
+# Dima&Dash Application
 
 Do you have cheap friends?  Do you have even one friend who gets the aligator arms every time the bill comes out?  That friend that always forgets to add in tax and tip when contirbuting for their meal?  Well we have the solution. [Pay your Bill](https://morning-reaches-30134.herokuapp.com/)
 
@@ -43,18 +51,3 @@ npm install sequelize
 * HTML5/CSS
 * Node
 * Heroku
-
-
-
-## Authors
-
-* **Mark Walker**
-* **Mike Scheeringa**
-* **Victoria Palacios**
-* **Vanaro Thorn**
-
-
-
-## License
-
-Pending 
