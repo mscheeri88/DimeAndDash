@@ -10,7 +10,8 @@
 
 # Dime&Dash Application
 
-Do you have cheap friends?  Do you have even one friend who gets the aligator arms every time the bill comes out?  That friend that always forgets to add in tax and tip when contirbuting for their meal?  Well we have the solution. [Dime&Dash](https://morning-reaches-30134.herokuapp.com/)
+Do you have cheap friends?  Do you have even one friend who gets the aligator arms every time the bill comes out?  That friend that always forgets to add in tax and tip when contirbuting for their meal?  Well we have the solution!
+[Dime&Dash](https://morning-reaches-30134.herokuapp.com/)
 
 ## How to Use
 
