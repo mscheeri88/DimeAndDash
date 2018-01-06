@@ -35,13 +35,14 @@ Do you have cheap friends?  Do you have even one friend who gets the aligator ar
 Installed Packages:
 
 ```
-npm install body-parse
-npm install express
-npm install express-handlebars
-npm install method-override
 npm install mysql
 npm install mysql2
+npm install express
 npm install sequelize
+npm install body-parse
+npm install method-override
+npm install express-handlebars
+
 
 ```
 
